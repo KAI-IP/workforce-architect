@@ -4,6 +4,7 @@ import { useState } from "react";
 import BriefForm from "@/components/BriefForm";
 import OrgCanvas from "@/components/OrgCanvas";
 import BalanceSheet from "@/components/BalanceSheet";
+import RefinePanel from "@/components/RefinePanel";
 import design from "@/lib/mocks/design.json";
 import { computeBalance } from "@/lib/cost";
 import type { Brief, OrgDesign, Role } from "@/lib/types";
@@ -26,30 +27,35 @@ export default function Home() {
     }));
   }
 
-  // §5.4 [엣지로 압축] — 예산 초과 시 아키텍트 재호출 (conversationId 유지로 직전 설계 맥락 계승)
-  async function handleCompress() {
-    const bal = computeBalance(orgDesign);
+  // §5.4 + 북극성② — 아키텍트 재호출(순환 수정). conversationId 유지로 직전 설계 맥락 계승.
+  async function refine(instruction: string) {
     setCompressing(true);
     try {
-      const instruction =
-        `현재 인건비 합계가 예산을 ${bal.over}만원 초과한다(합계 ${bal.total}만, 예산 ${bal.budget}만). ` +
-        `공급이 얇거나 자동화 가능한 역할의 업무 일부를 AI로 이전하고, 인간 역할은 엣지 판단 중심으로 ` +
-        `축소·통합해 인건비 합계가 예산 이내로 들어오게 재설계하라. 지침의 JSON 스키마만 출력.`;
       const res = await fetch("/api/architect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...orgDesign.project, instruction, conversationId }),
       });
       const json = await res.json();
-      console.log("[compress] response =", json);
+      console.log("[refine] response =", json);
       if (json.design) setOrgDesign(json.design as OrgDesign);
       setDegraded(Boolean(json.degraded));
       setConversationId(json.conversationId ?? conversationId);
     } catch (e) {
-      console.error("[compress] failed", e);
+      console.error("[refine] failed", e);
     } finally {
       setCompressing(false);
     }
+  }
+
+  // [엣지로 압축] — refine 의 예산 압축 프리셋
+  function handleCompress() {
+    const bal = computeBalance(orgDesign);
+    return refine(
+      `현재 인건비 합계가 예산을 ${bal.over}만원 초과한다(합계 ${bal.total}만, 예산 ${bal.budget}만). ` +
+        `공급이 얇거나 자동화 가능한 역할의 업무 일부를 AI로 이전하고, 인간 역할은 엣지 판단 중심으로 ` +
+        `축소·통합해 인건비 합계가 예산 이내로 들어오게 재설계하라. 지침의 JSON 스키마만 출력.`,
+    );
   }
 
   async function handleDesign(b: Brief) {
@@ -123,9 +129,10 @@ export default function Home() {
         </section>
       </div>
 
-      {/* P7: 리소스 밸런스 시트 (전체 폭) */}
-      <section className="mt-8">
+      {/* P7: 리소스 밸런스 시트 + P8: 순환 수정 (전체 폭) */}
+      <section className="mt-8 space-y-4">
         <BalanceSheet design={orgDesign} onCompress={handleCompress} compressing={compressing} />
+        <RefinePanel onRefine={refine} busy={compressing} />
       </section>
     </main>
   );

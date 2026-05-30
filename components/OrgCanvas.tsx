@@ -34,7 +34,7 @@ export default function OrgCanvas({
             <p className="mb-3 text-[10px] leading-snug text-white/35">{meta.desc}</p>
             <div className="space-y-2">
               {roles.map((r) => (
-                <RoleCard key={r.id} role={r} onRoleUpdate={onRoleUpdate} />
+                <RoleCard key={r.id} role={r} project={design.project} onRoleUpdate={onRoleUpdate} />
               ))}
               {!roles.length && (
                 <p className="py-4 text-center text-[11px] text-white/25">

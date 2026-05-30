@@ -59,8 +59,8 @@ export async function POST(req: Request) {
     const data = await misoChat({
       key,
       inputs: {
-        summary: role.title,
-        targetCustomer: role.jobCategoryQuery ?? "",
+        summary: role.title || "역할",
+        targetCustomer: role.jobCategoryQuery || role.title || "일반",
         targetRevenue: "0",
         durationMonths: "0",
         laborBudget: "0",

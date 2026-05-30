@@ -68,13 +68,13 @@ export default function BalanceSheet({
       {/* 스택 막대 + 예산선 */}
       <div className="relative h-7 w-full overflow-hidden rounded-md bg-white/5">
         <div className="flex h-full">
-          <div style={{ width: seg(b.ai), background: LANE_META.AI.color }} />
-          <div style={{ width: seg(b.edge), background: LANE_META.EDGE.color }} />
-          <div style={{ width: seg(b.field), background: LANE_META.FIELD.color }} />
+          <div className="transition-[width] duration-700 ease-out" style={{ width: seg(b.ai), background: LANE_META.AI.color }} />
+          <div className="transition-[width] duration-700 ease-out" style={{ width: seg(b.edge), background: LANE_META.EDGE.color }} />
+          <div className="transition-[width] duration-700 ease-out" style={{ width: seg(b.field), background: LANE_META.FIELD.color }} />
         </div>
         {/* 예산선 마커 */}
         <div
-          className="absolute top-0 h-full border-l-2 border-dashed border-white"
+          className="absolute top-0 h-full border-l-2 border-dashed border-white transition-[left] duration-700 ease-out"
           style={{ left: budgetLeft }}
           title={`예산 ${fmt(b.budget)}`}
         >
