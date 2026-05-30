@@ -4,7 +4,7 @@ import { useState } from "react";
 import BriefForm from "@/components/BriefForm";
 import OrgCanvas from "@/components/OrgCanvas";
 import design from "@/lib/mocks/design.json";
-import type { Brief, OrgDesign } from "@/lib/types";
+import type { Brief, OrgDesign, Role } from "@/lib/types";
 
 const mock = design as OrgDesign;
 
@@ -14,6 +14,14 @@ export default function Home() {
   const [degraded, setDegraded] = useState(false);
   const [designed, setDesigned] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+
+  // P6: 페르소나 팝오버의 시니어리티 조절 → 역할 패치 → 비용·밸런스 즉시 갱신
+  function updateRole(roleId: string, patch: Partial<Role>) {
+    setOrgDesign((d) => ({
+      ...d,
+      roles: d.roles.map((r) => (r.id === roleId ? { ...r, ...patch } : r)),
+    }));
+  }
 
   async function handleDesign(b: Brief) {
     console.log("[BriefForm] Brief =", b);
@@ -78,7 +86,7 @@ export default function Home() {
               {loading ? "분석 중…" : `${orgDesign.project.title} · ${orgDesign.roles.length}개 역할`}
             </span>
           </div>
-          <OrgCanvas design={orgDesign} loading={loading} />
+          <OrgCanvas design={orgDesign} loading={loading} onRoleUpdate={updateRole} />
           <p className="pt-1 text-xs text-white/30">
             인간 카드의 “시장 N건”은 로켓펀치 공급량입니다. (
             <span className="text-white/40">*</span> = 로켓펀치 API 미응답 시 목 데이터)

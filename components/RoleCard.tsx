@@ -3,17 +3,26 @@
 import { useEffect, useState } from "react";
 import type { Role } from "@/lib/types";
 import { LANE_META, isHuman } from "@/lib/lanes";
+import { roleCost } from "@/lib/cost";
+import PersonaPopover from "./PersonaPopover";
 
 function costLabel(r: Role): string {
-  if (r.lane === "AI") {
-    return r.estimatedMonthlyAiCost ? `≈ ${r.estimatedMonthlyAiCost.toLocaleString()}만/월` : "";
-  }
-  return r.estimatedAnnualSalary ? `≈ ${r.estimatedAnnualSalary.toLocaleString()}만/년` : "";
+  const annual = roleCost(r);
+  if (!annual) return "";
+  if (r.lane === "AI") return `≈ ${annual.toLocaleString()}만/년 (AI)`;
+  return `≈ ${annual.toLocaleString()}만/년`;
 }
 
-export default function RoleCard({ role }: { role: Role }) {
+export default function RoleCard({
+  role,
+  onRoleUpdate,
+}: {
+  role: Role;
+  onRoleUpdate: (roleId: string, patch: Partial<Role>) => void;
+}) {
   const meta = LANE_META[role.lane];
   const human = isHuman(role.lane);
+  const [open, setOpen] = useState(false);
 
   // §5.2 로켓펀치 공급 배지 (P5): 인간 역할만 /api/jobs 로 공급량 조회
   const [supply, setSupply] = useState<number | null>(null);
@@ -37,9 +46,15 @@ export default function RoleCard({ role }: { role: Role }) {
 
   return (
     <div
-      className="rounded-lg border border-white/10 bg-white/[0.04] p-3"
+      onClick={() => human && setOpen(true)}
+      className={`rounded-lg border border-white/10 bg-white/[0.04] p-3 ${
+        human ? "cursor-pointer hover:border-white/25" : ""
+      }`}
       style={{ borderLeftColor: meta.color, borderLeftWidth: 3 }}
     >
+      {open && human && (
+        <PersonaPopover role={role} onClose={() => setOpen(false)} onRoleUpdate={onRoleUpdate} />
+      )}
       <div className="flex items-start justify-between gap-2">
         <span className="text-sm font-medium text-white/90">{role.title}</span>
         {human && (

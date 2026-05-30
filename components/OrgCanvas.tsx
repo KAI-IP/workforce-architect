@@ -1,6 +1,6 @@
 "use client";
 
-import type { OrgDesign } from "@/lib/types";
+import type { OrgDesign, Role } from "@/lib/types";
 import { LANE_META, LANE_ORDER } from "@/lib/lanes";
 import RoleCard from "./RoleCard";
 
@@ -8,9 +8,11 @@ import RoleCard from "./RoleCard";
 export default function OrgCanvas({
   design,
   loading = false,
+  onRoleUpdate,
 }: {
   design: OrgDesign;
   loading?: boolean;
+  onRoleUpdate: (roleId: string, patch: Partial<Role>) => void;
 }) {
   return (
     <div className="grid gap-4 md:grid-cols-3">
@@ -32,7 +34,7 @@ export default function OrgCanvas({
             <p className="mb-3 text-[10px] leading-snug text-white/35">{meta.desc}</p>
             <div className="space-y-2">
               {roles.map((r) => (
-                <RoleCard key={r.id} role={r} />
+                <RoleCard key={r.id} role={r} onRoleUpdate={onRoleUpdate} />
               ))}
               {!roles.length && (
                 <p className="py-4 text-center text-[11px] text-white/25">

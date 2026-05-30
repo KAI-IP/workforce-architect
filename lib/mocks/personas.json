@@ -26,12 +26,18 @@
     }
   ],
   "market": {
-    "supply": 0,
+    "supply": 48,
     "samples": [
       {
         "title": "(목) 수의사 — 반려동물 헬스케어 스타트업",
         "company": "MOCK Pet Health",
         "qualification": "수의사 면허 필수, 임상영양 경험 우대",
+        "url": "https://www.rocketpunch.com/jobs"
+      },
+      {
+        "title": "(목) 임상영양 컨설턴트 — 펫푸드",
+        "company": "MOCK Nutrition Lab",
+        "qualification": "수의/영양 전공, 배합 설계 3년 이상",
         "url": "https://www.rocketpunch.com/jobs"
       }
     ]
