@@ -3,6 +3,7 @@ import type { Persona, Role } from "@/lib/types";
 import mockPersonas from "@/lib/mocks/personas.json";
 import { misoChat, extractJson } from "@/lib/miso";
 import { searchJobs, parseJobs, type JobSample } from "@/lib/rocketpunch";
+import { buildRoleGrounding } from "@/lib/knowledge";
 
 export const runtime = "nodejs";
 
@@ -48,12 +49,15 @@ export async function POST(req: Request) {
   const sampleHint = market.samples
     .map((s) => `- ${s.title} / ${s.company} / ${s.qualification}`)
     .join("\n");
+  // P0 그라운딩: 역할에 매칭된 NCS 수행준거·노동비용을 페르소나 합성 근거로 주입.
+  const grounding = buildRoleGrounding(role);
   const query =
     `다음 인간 역할에 대한 합성 채용 페르소나 3명을 JSON으로만 출력하라(조직설계 금지). ` +
     `스키마: ${PERSONA_SCHEMA}. ` +
     `역할: ${role.title} (${role.lane}), 직군: ${role.jobCategoryQuery}, 현재 시니어리티: ${role.seniority}. ` +
+    (grounding ? `\n${grounding}\n` : "") +
     `참고 시장 공고:\n${sampleHint || "(없음)"}\n` +
-    `reason 에는 왜 이 사람이 엣지/체화 판단에 적합한지 한 문장.`;
+    `reason 에는 왜 이 사람이 엣지/체화 판단에 적합한지(NCS 수행준거 근거) 한 문장.`;
 
   try {
     const data = await misoChat({

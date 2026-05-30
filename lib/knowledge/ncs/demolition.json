@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "건축물 해체·철거",
+    "aliases": ["철거", "해체공사", "구조물 해체"],
+    "classification": {
+      "major": { "code": "14", "name": "건설" },
+      "middle": { "code": "1402", "name": "건축" },
+      "minor": { "code": "140204", "name": "건축시공" },
+      "detail": { "code": "1402040401", "name": "건축물 해체공사" }
+    },
+    "laneHint": "FIELD",
+    "embodimentBasis": "구조물 해체·중장비 운용·비산먼지 관리는 현장 신체작업(Field). 해체계획서 작성·구조안전 검토·인허가는 Edge 전문가 협업.",
+    "competencyUnits": [
+      {
+        "code": "1402040401_v1",
+        "name": "해체공사 사전 준비",
+        "level": 5,
+        "elements": [
+          {
+            "name": "해체계획 수립하기",
+            "performanceCriteria": [
+              "구조 형식·주변 환경을 조사하여 해체공법을 선정할 수 있다.",
+              "해체계획서를 관계 법령에 따라 작성하고 심의를 준비할 수 있다."
+            ]
+          },
+          {
+            "name": "안전·환경 조치 계획하기",
+            "performanceCriteria": [
+              "낙하·붕괴·소음·분진 위험에 대한 안전대책을 수립할 수 있다.",
+              "석면 등 유해물질 사전조사·처리 계획을 수립할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "1402040401_v1_2",
+        "name": "해체공사 시공",
+        "level": 3,
+        "elements": [
+          {
+            "name": "구조물 해체하기",
+            "performanceCriteria": [
+              "해체 순서에 따라 장비·인력을 배치하여 안전하게 해체할 수 있다.",
+              "작업 중 구조 거동을 관찰하여 위험 징후에 대응할 수 있다."
+            ]
+          },
+          {
+            "name": "폐기물 분리·반출하기",
+            "performanceCriteria": [
+              "건설폐기물을 종류별로 분리하여 적법하게 반출할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

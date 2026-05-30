@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "meta": {
+    "title": "직군·경력별 노동비용 표 (PoC 시드)",
+    "currency": "만원/년 (세전 연봉, 사업자 부담분 제외 base)",
+    "basisYear": 2024,
+    "sources": [
+      "고용노동부 사업체노동력조사(임금·근로시간)",
+      "고용노동부 고용형태별근로실태조사(임금구조)",
+      "워크넷/잡코리아 공고 임금 분포(시장 참고)"
+    ],
+    "poc_assumption": true,
+    "disclaimer": "공개 통계의 직군 평균을 기준으로 한 PoC 가정값. 재무자문 아님. lib/cost.ts 의 estimatedAnnualSalary 입력 근거로 사용. EDGE 총비용은 cost.ts 에서 EDGE_BURDEN(1.2: 퇴직·4대보험·고정비)을 별도 적용.",
+    "seniorityScale": {
+      "BEGINNER": "0~1년 / 신입",
+      "JUNIOR": "2~4년",
+      "MIDLEVEL": "5~8년",
+      "SENIOR": "9년+ / 리드",
+      "EXECUTIVE": "임원·총괄"
+    }
+  },
+  "families": [
+    {
+      "ncsMajor": "06 보건·의료", "jobSlug": "veterinary", "family": "수의·동물보건",
+      "salaryBySeniority": { "BEGINNER": [3800, 4500], "JUNIOR": [4500, 5500], "MIDLEVEL": [5500, 7000], "SENIOR": [7000, 9500], "EXECUTIVE": [9500, 14000] }
+    },
+    {
+      "ncsMajor": "07 사회복지·종교", "jobSlug": "counseling", "family": "상담·고객상담",
+      "salaryBySeniority": { "BEGINNER": [2600, 3000], "JUNIOR": [3000, 3600], "MIDLEVEL": [3600, 4500], "SENIOR": [4500, 5800], "EXECUTIVE": [5800, 8000] }
+    },
+    {
+      "ncsMajor": "05 법률", "jobSlug": "legal-affairs", "family": "법률사무·컴플라이언스",
+      "salaryBySeniority": { "BEGINNER": [3000, 3600], "JUNIOR": [3600, 4500], "MIDLEVEL": [4500, 6000], "SENIOR": [6000, 8500], "EXECUTIVE": [8500, 13000] }
+    },
+    {
+      "ncsMajor": "01 사업관리", "jobSlug": "project-management", "family": "프로젝트·사업관리",
+      "salaryBySeniority": { "BEGINNER": [3200, 3800], "JUNIOR": [3800, 4800], "MIDLEVEL": [4800, 6500], "SENIOR": [6500, 9000], "EXECUTIVE": [9000, 15000] }
+    },
+    {
+      "ncsMajor": "21 식품가공", "jobSlug": "food-quality", "family": "식품 품질관리",
+      "salaryBySeniority": { "BEGINNER": [2800, 3300], "JUNIOR": [3300, 4000], "MIDLEVEL": [4000, 5200], "SENIOR": [5200, 6800], "EXECUTIVE": [6800, 9000] }
+    },
+    {
+      "ncsMajor": "09 운전·운송", "jobSlug": "delivery-logistics", "family": "택배·배송",
+      "salaryBySeniority": { "BEGINNER": [2600, 3200], "JUNIOR": [3200, 3800], "MIDLEVEL": [3800, 4600], "SENIOR": [4600, 5500], "EXECUTIVE": [5500, 7000] },
+      "fieldRate": { "per_visit": [0.4, 0.8], "hourly": [1.2, 2.0], "unit": "만원", "note": "라스트마일 건당/시급 도급 기준 PoC 가정" }
+    },
+    {
+      "ncsMajor": "23 환경·에너지·안전", "jobSlug": "sewerage", "family": "하수도 시공·유지관리",
+      "salaryBySeniority": { "BEGINNER": [3000, 3600], "JUNIOR": [3600, 4400], "MIDLEVEL": [4400, 5600], "SENIOR": [5600, 7200], "EXECUTIVE": [7200, 9500] },
+      "fieldRate": { "hourly": [1.8, 3.0], "outsource_monthly": [400, 900], "unit": "만원", "note": "현장 일당/시급 또는 정비 도급 월단가 PoC 가정" }
+    },
+    {
+      "ncsMajor": "14 건설", "jobSlug": "demolition", "family": "건축물 해체·철거",
+      "salaryBySeniority": { "BEGINNER": [3000, 3800], "JUNIOR": [3800, 4800], "MIDLEVEL": [4800, 6200], "SENIOR": [6200, 8000], "EXECUTIVE": [8000, 11000] },
+      "fieldRate": { "hourly": [2.0, 3.5], "outsource_monthly": [600, 1500], "unit": "만원", "note": "해체 현장 일당/공사 도급 PoC 가정" }
+    },
+    {
+      "ncsMajor": "15 기계", "jobSlug": "equipment-installation", "family": "기계설비 설치·시운전",
+      "salaryBySeniority": { "BEGINNER": [3000, 3600], "JUNIOR": [3600, 4600], "MIDLEVEL": [4600, 6000], "SENIOR": [6000, 8000], "EXECUTIVE": [8000, 11000] },
+      "fieldRate": { "per_visit": [3.0, 8.0], "hourly": [2.0, 3.5], "unit": "만원", "note": "설치 건당/시급 도급 PoC 가정" }
+    },
+    {
+      "ncsMajor": "08 문화·예술·디자인·방송", "jobSlug": "digital-marketing", "family": "디지털 마케팅",
+      "salaryBySeniority": { "BEGINNER": [2800, 3400], "JUNIOR": [3400, 4400], "MIDLEVEL": [4400, 6000], "SENIOR": [6000, 8500], "EXECUTIVE": [8500, 13000] }
+    },
+    {
+      "ncsMajor": "20 정보통신", "jobSlug": "data-analysis", "family": "데이터 분석·사이언스",
+      "salaryBySeniority": { "BEGINNER": [3600, 4500], "JUNIOR": [4500, 6000], "MIDLEVEL": [6000, 8500], "SENIOR": [8500, 12000], "EXECUTIVE": [12000, 18000] }
+    },
+    {
+      "ncsMajor": "02 경영·회계·사무", "jobSlug": "cs-operations", "family": "고객서비스 운영",
+      "salaryBySeniority": { "BEGINNER": [2600, 3000], "JUNIOR": [3000, 3600], "MIDLEVEL": [3600, 4600], "SENIOR": [4600, 6000], "EXECUTIVE": [6000, 8000] }
+    }
+  ],
+  "aiOpsCostReference": {
+    "currency": "만원/월",
+    "poc_assumption": true,
+    "note": "AI 레인 역할의 estimatedMonthlyAiCost 산정 참고. MISO 앱/워크플로우 운영비(LLM 토큰+인프라+유지보수) 기준 PoC 가정.",
+    "tiers": {
+      "single_workflow_light": [100, 300],
+      "agent_with_rag": [300, 800],
+      "multi_agent_or_pipeline": [800, 2000],
+      "high_volume_realtime": [2000, 5000]
+    }
+  }
+}

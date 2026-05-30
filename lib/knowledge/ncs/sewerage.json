@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "하수도 시공·유지관리",
+    "aliases": ["하수도", "상하수도", "관로 정비", "하수관거"],
+    "classification": {
+      "major": { "code": "23", "name": "환경·에너지·안전" },
+      "middle": { "code": "2301", "name": "환경" },
+      "minor": { "code": "230103", "name": "수질관리" },
+      "detail": { "code": "2301030301", "name": "하수도 시설 운영·관리" }
+    },
+    "laneHint": "FIELD",
+    "embodimentBasis": "관로 진입·굴착·현장 시공은 신체·중장비 필수(Field). 유량·수질 센서 모니터링과 정비 이력 분석은 AI 보조.",
+    "competencyUnits": [
+      {
+        "code": "2301030301_v1",
+        "name": "하수관로 조사·진단",
+        "level": 4,
+        "elements": [
+          {
+            "name": "관로 상태 조사하기",
+            "performanceCriteria": [
+              "CCTV·육안 조사로 관로의 균열·침하·이음부 손상을 식별할 수 있다.",
+              "조사 결과를 결함 등급 기준에 따라 분류·기록할 수 있다."
+            ]
+          },
+          {
+            "name": "정비 우선순위 판단하기",
+            "performanceCriteria": [
+              "결함 등급·침수 위험을 고려하여 정비 우선순위를 산정할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "2301030301_v1_2",
+        "name": "하수관로 보수·시공",
+        "level": 3,
+        "elements": [
+          {
+            "name": "굴착·안전 조치하기",
+            "performanceCriteria": [
+              "지하매설물 도면을 확인하여 안전하게 굴착할 수 있다.",
+              "밀폐공간 작업 시 가스측정·환기 등 안전수칙을 준수할 수 있다."
+            ]
+          },
+          {
+            "name": "관로 보수하기",
+            "performanceCriteria": [
+              "손상 유형에 맞는 비굴착·굴착 보수공법을 적용할 수 있다.",
+              "시공 후 통수·누수 시험으로 품질을 확인할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

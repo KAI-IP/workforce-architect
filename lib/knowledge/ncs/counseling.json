@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "직업·고객 상담",
+    "aliases": ["직업상담사", "고객상담사", "상담", "CS 전문상담"],
+    "classification": {
+      "major": { "code": "07", "name": "사회복지·종교" },
+      "middle": { "code": "0702", "name": "상담" },
+      "minor": { "code": "070201", "name": "직업상담서비스" },
+      "detail": { "code": "0702010101", "name": "직업상담" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "신뢰 구축·정서적 공감·고위험 상황 판단이 핵심. 단순 FAQ·예약·라우팅은 AI 위임 가능하나, 이의·민감 사안의 최종 응대는 Edge 책임.",
+    "competencyUnits": [
+      {
+        "code": "0702010101_v1",
+        "name": "상담 관계 형성",
+        "level": 4,
+        "elements": [
+          {
+            "name": "라포 형성하기",
+            "performanceCriteria": [
+              "내담자의 정서 상태를 파악하여 안전한 상담 분위기를 조성할 수 있다.",
+              "경청·반영 기법으로 내담자의 호소 문제를 명료화할 수 있다."
+            ]
+          },
+          {
+            "name": "요구 분석하기",
+            "performanceCriteria": [
+              "내담자의 명시적·잠재적 요구를 구분하여 정리할 수 있다.",
+              "상담 목표를 내담자와 합의하여 설정할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "0702010101_v1_2",
+        "name": "맞춤 정보 제공 및 연계",
+        "level": 5,
+        "elements": [
+          {
+            "name": "해결안 제시하기",
+            "performanceCriteria": [
+              "요구 분석 결과에 근거하여 대안을 제시하고 장단점을 설명할 수 있다.",
+              "내담자가 자기결정할 수 있도록 정보를 중립적으로 전달할 수 있다."
+            ]
+          },
+          {
+            "name": "사후 관리하기",
+            "performanceCriteria": [
+              "상담 결과를 기록하고 후속 조치 계획을 수립할 수 있다.",
+              "재상담·전문기관 연계 필요성을 판단할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

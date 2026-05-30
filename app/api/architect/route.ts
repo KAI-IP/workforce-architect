@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { Brief, OrgDesign, Role } from "@/lib/types";
 import mockDesign from "@/lib/mocks/design.json";
 import { misoChat, extractJson } from "@/lib/miso";
+import { buildArchitectGrounding } from "@/lib/knowledge";
 
 export const runtime = "nodejs";
 
@@ -58,11 +59,17 @@ export async function POST(req: Request) {
     hasOffline: String(brief.hasOffline),
   };
 
-  const query =
+  // P0 그라운딩: NCS 직무·수행준거·노동비용·프로세스맵 근거를 query 에 주입.
+  // (MISO 앱의 지식(RAG)을 쓰지 않는 환경에서도 그라운딩이 동작하도록 in-query 주입)
+  const grounding = buildArchitectGrounding(brief);
+
+  const baseQuery =
     body.instruction ??
     "위 브리프로 하이브리드 조직을 설계하라. 지침의 JSON 스키마만 출력하라. " +
       "모든 숫자 필드(estimatedAnnualSalary, estimatedMonthlyAiCost, fieldCost.unit, " +
       "fieldCost.volume, targetRevenue, laborBudget 등)는 단위·한글·따옴표 없이 순수 정수로만 쓴다.";
+
+  const query = `${grounding}\n\n---\n${baseQuery}`;
 
   // §10-4: 모델 JSON 신뢰성 대비 — 파싱 실패 시 재시도, 그래도 실패하면 목 fallback
   const MAX_TRIES = 3;

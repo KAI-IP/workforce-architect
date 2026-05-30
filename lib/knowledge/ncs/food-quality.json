@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "식품 품질관리",
+    "aliases": ["식품품질", "품질관리", "QC", "사료 품질검수"],
+    "classification": {
+      "major": { "code": "21", "name": "식품가공" },
+      "middle": { "code": "2101", "name": "식품가공" },
+      "minor": { "code": "210101", "name": "식품품질관리" },
+      "detail": { "code": "2101010201", "name": "식품 품질관리" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "안전·규격 최종 판정과 책임은 Edge. 검사 데이터 수집·이상치 탐지·문서화는 AI/센서 보조 가능, 합부 판정은 인간 승인.",
+    "competencyUnits": [
+      {
+        "code": "2101010201_v1",
+        "name": "원료·완제품 품질 검사",
+        "level": 4,
+        "elements": [
+          {
+            "name": "검사 계획 수립하기",
+            "performanceCriteria": [
+              "제품 규격에 따라 검사 항목·주기·시료수를 결정할 수 있다.",
+              "검사 기준(공정·법적 규격)을 문서화할 수 있다."
+            ]
+          },
+          {
+            "name": "합부 판정하기",
+            "performanceCriteria": [
+              "검사 결과를 규격과 비교하여 합격·불합격을 판정할 수 있다.",
+              "부적합품의 처리·재발방지 조치를 결정할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "2101010201_v1_2",
+        "name": "위생·안전 관리(HACCP)",
+        "level": 5,
+        "elements": [
+          {
+            "name": "중요관리점 모니터링하기",
+            "performanceCriteria": [
+              "CCP 한계기준의 준수 여부를 모니터링하고 기록할 수 있다.",
+              "한계기준 이탈 시 개선조치를 실행할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

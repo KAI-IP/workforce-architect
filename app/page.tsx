@@ -5,6 +5,7 @@ import BriefForm from "@/components/BriefForm";
 import OrgCanvas from "@/components/OrgCanvas";
 import BalanceSheet from "@/components/BalanceSheet";
 import RefinePanel from "@/components/RefinePanel";
+import PublishPreview from "@/components/PublishPreview";
 import design from "@/lib/mocks/design.json";
 import { computeBalance } from "@/lib/cost";
 import type { Brief, OrgDesign, Role } from "@/lib/types";
@@ -18,6 +19,7 @@ export default function Home() {
   const [designed, setDesigned] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [compressing, setCompressing] = useState(false);
+  const [publishOpen, setPublishOpen] = useState(false);
 
   // P6: 페르소나 팝오버의 시니어리티 조절 → 역할 패치 → 비용·밸런스 즉시 갱신
   function updateRole(roleId: string, patch: Partial<Role>) {
@@ -84,16 +86,26 @@ export default function Home() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
-      <header className="mb-8">
-        <p className="text-xs font-semibold uppercase tracking-widest text-white/40">
-          workforce-architect · 7h PoC
-        </p>
-        <h1 className="mt-2 text-3xl font-bold">가상 하이브리드 조직 설계 시뮬레이터</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/60">
-          사업 브리프를 입력하면 “지능은 시스템에, 사람은 엣지에” 원리로 일을 AI / 인간-Edge /
-          인간-Field 3영역으로 분해합니다.
-        </p>
+      <header className="mb-8 flex items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-white/40">
+            workforce-architect · 7h PoC
+          </p>
+          <h1 className="mt-2 text-3xl font-bold">가상 하이브리드 조직 설계 시뮬레이터</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/60">
+            사업 브리프를 입력하면 “지능은 시스템에, 사람은 엣지에” 원리로 일을 AI / 인간-Edge /
+            인간-Field 3영역으로 분해합니다.
+          </p>
+        </div>
+        <button
+          onClick={() => setPublishOpen(true)}
+          className="shrink-0 rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80 hover:bg-white/10"
+        >
+          📄 실행계획 문서
+        </button>
       </header>
+
+      {publishOpen && <PublishPreview design={orgDesign} onClose={() => setPublishOpen(false)} />}
 
       <div className="grid gap-8 lg:grid-cols-[360px_1fr]">
         {/* 좌측: 브리프 폼 */}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "데이터 분석",
+    "aliases": ["데이터분석", "데이터 사이언스", "추천·예측 모델링", "BI"],
+    "classification": {
+      "major": { "code": "20", "name": "정보통신" },
+      "middle": { "code": "2001", "name": "정보기술" },
+      "minor": { "code": "200103", "name": "빅데이터분석" },
+      "detail": { "code": "2001030101", "name": "빅데이터 분석" }
+    },
+    "laneHint": "AI",
+    "embodimentBasis": "데이터 수집·정제·모델링·예측·자동 추천은 AI/시스템 핵심 역량. 분석 가설 설정·결과 해석의 의사결정 책임은 Edge.",
+    "competencyUnits": [
+      {
+        "code": "2001030101_v1",
+        "name": "데이터 수집·전처리",
+        "level": 4,
+        "elements": [
+          {
+            "name": "데이터 수집하기",
+            "performanceCriteria": [
+              "분석 목적에 맞는 데이터 원천을 식별하고 수집 파이프라인을 구성할 수 있다.",
+              "개인정보·민감정보 처리 규정을 준수하여 수집할 수 있다."
+            ]
+          },
+          {
+            "name": "데이터 정제하기",
+            "performanceCriteria": [
+              "결측·이상치를 탐지·처리할 수 있다.",
+              "분석에 적합한 형태로 변환·통합할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "2001030101_v1_2",
+        "name": "모델링·예측",
+        "level": 5,
+        "elements": [
+          {
+            "name": "모델 개발하기",
+            "performanceCriteria": [
+              "문제 유형에 맞는 알고리즘을 선택하여 모델을 학습할 수 있다.",
+              "교차검증으로 성능을 평가하고 과적합을 통제할 수 있다."
+            ]
+          },
+          {
+            "name": "결과 운영하기",
+            "performanceCriteria": [
+              "예측·추천 결과를 서비스에 연계하고 모니터링할 수 있다.",
+              "성능 저하 시 재학습 기준을 정의할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "description": "NCS P0 시드 카탈로그. jobCategoryQuery/역할명 → 직무 파일 매칭에 사용.",
+  "ncsMajorCategories": [
+    "01 사업관리", "02 경영·회계·사무", "03 금융·보험", "04 교육·자연·사회과학",
+    "05 법률·경찰·소방·교도·국방", "06 보건·의료", "07 사회복지·종교",
+    "08 문화·예술·디자인·방송", "09 운전·운송", "10 영업판매", "11 경비·청소",
+    "12 이용·숙박·여행·오락·스포츠", "13 음식서비스", "14 건설", "15 기계",
+    "16 재료", "17 화학·바이오", "18 섬유·의복", "19 전기·전자", "20 정보통신",
+    "21 식품가공", "22 인쇄·목재·가구·공예", "23 환경·에너지·안전", "24 농림어업"
+  ],
+  "jobs": [
+    { "slug": "veterinary", "title": "수의 진료", "major": "06", "laneHint": "EDGE", "keywords": ["수의", "수의사", "동물", "반려동물", "의료 검수", "진료"] },
+    { "slug": "counseling", "title": "직업·고객 상담", "major": "07", "laneHint": "EDGE", "keywords": ["상담", "상담사", "고객상담", "직업상담", "컨설팅"] },
+    { "slug": "legal-affairs", "title": "법률사무", "major": "05", "laneHint": "EDGE", "keywords": ["법무", "법률", "계약", "컴플라이언스", "paralegal", "심사"] },
+    { "slug": "project-management", "title": "프로젝트 관리", "major": "01", "laneHint": "EDGE", "keywords": ["PM", "프로젝트", "사업관리", "PMO", "기획", "총괄"] },
+    { "slug": "food-quality", "title": "식품 품질관리", "major": "21", "laneHint": "EDGE", "keywords": ["품질", "품질관리", "QC", "검수", "사료", "식품", "HACCP"] },
+    { "slug": "delivery-logistics", "title": "택배·배송", "major": "09", "laneHint": "FIELD", "keywords": ["배송", "배송기사", "택배", "물류", "라스트마일", "운송", "샘플링"] },
+    { "slug": "sewerage", "title": "하수도 시공·유지관리", "major": "23", "laneHint": "FIELD", "keywords": ["하수도", "상하수도", "관로", "하수관거", "수질", "정비"] },
+    { "slug": "demolition", "title": "건축물 해체·철거", "major": "14", "laneHint": "FIELD", "keywords": ["철거", "해체", "구조물", "건설", "폐기물"] },
+    { "slug": "equipment-installation", "title": "기계설비 설치·시운전", "major": "15", "laneHint": "FIELD", "keywords": ["설치", "설비", "기계설비", "시공", "시운전", "설치기사"] },
+    { "slug": "digital-marketing", "title": "디지털 마케팅", "major": "08", "laneHint": "AI", "keywords": ["마케팅", "콘텐츠", "퍼포먼스", "SNS", "광고", "캠페인"] },
+    { "slug": "data-analysis", "title": "데이터 분석", "major": "20", "laneHint": "AI", "keywords": ["데이터", "분석", "추천", "예측", "모델링", "BI", "AI"] },
+    { "slug": "cs-operations", "title": "고객서비스 운영", "major": "02", "laneHint": "AI", "keywords": ["CS", "고객지원", "고객서비스", "컨택센터", "주문", "응대"] }
+  ]
+}

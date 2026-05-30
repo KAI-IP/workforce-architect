@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "기계설비 설치·시운전",
+    "aliases": ["설치", "설비설치", "기계설비", "현장 설치기사"],
+    "classification": {
+      "major": { "code": "15", "name": "기계" },
+      "middle": { "code": "1505", "name": "기계장치설치·정비" },
+      "minor": { "code": "150501", "name": "기계설비설치" },
+      "detail": { "code": "1505010101", "name": "기계설비 설치" }
+    },
+    "laneHint": "FIELD",
+    "embodimentBasis": "현장 반입·정렬·배관·시운전은 신체·공구 작업(Field). 설치 도면 검토·예지정비 데이터 분석은 AI/Edge 보조.",
+    "competencyUnits": [
+      {
+        "code": "1505010101_v1",
+        "name": "설치 준비 및 반입",
+        "level": 3,
+        "elements": [
+          {
+            "name": "설치 도면 확인하기",
+            "performanceCriteria": [
+              "설치 도면·시방서를 확인하여 작업 범위와 간섭을 파악할 수 있다.",
+              "반입 동선·양중 계획을 수립할 수 있다."
+            ]
+          },
+          {
+            "name": "기초·앵커 시공하기",
+            "performanceCriteria": [
+              "장비 하중에 맞는 기초·앵커를 시공할 수 있다.",
+              "수평·레벨을 측정하여 허용오차 내로 조정할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "1505010101_v1_2",
+        "name": "설치 및 시운전",
+        "level": 4,
+        "elements": [
+          {
+            "name": "배관·배선 연결하기",
+            "performanceCriteria": [
+              "유체·전기 계통을 도면에 따라 연결하고 누설을 점검할 수 있다."
+            ]
+          },
+          {
+            "name": "시운전하기",
+            "performanceCriteria": [
+              "시운전 절차에 따라 작동 상태·진동·소음을 점검할 수 있다.",
+              "성능 기준 충족 여부를 확인하고 인수인계 문서를 작성할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

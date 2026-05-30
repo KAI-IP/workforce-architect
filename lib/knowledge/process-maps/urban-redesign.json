@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "domain": "도시 재설계 (노후 구역 정비: 철거·인프라·재설치)",
+  "poc_assumption": true,
+  "note": "도시정비/재개발 실행 흐름을 기준으로 한 PoC 프로세스 맵. 물리·현장 직무(FIELD) 비중이 높아 3레인 분해 검증에 유용.",
+  "laneSummary": { "AI": 2, "EDGE": 2, "FIELD": 3 },
+  "stages": [
+    {
+      "order": 1, "name": "조사·계획",
+      "steps": [
+        { "actor": "데이터 분석 AI", "lane": "AI", "ncsJob": "data-analysis", "action": "GIS·인구·인프라 데이터 분석, 정비 우선순위 시뮬레이션", "handoffTo": "프로젝트 총괄" },
+        { "actor": "프로젝트 총괄(PM)", "lane": "EDGE", "ncsJob": "project-management", "action": "정비 범위·일정·예산 수립, 이해관계자·인허가 조율", "handoffTo": "법무 검토자", "isGate": true },
+        { "actor": "법무·인허가 검토자", "lane": "EDGE", "ncsJob": "legal-affairs", "action": "도시계획·환경 법령 검토, 보상·계약 리스크 점검", "handoffTo": "철거 작업자" }
+      ]
+    },
+    {
+      "order": 2, "name": "철거·해체",
+      "steps": [
+        { "actor": "건축물 해체 작업자", "lane": "FIELD", "ncsJob": "demolition", "action": "해체계획 기반 구조물 철거, 비산먼지·폐기물 관리", "handoffTo": "하수도 정비 작업자" }
+      ]
+    },
+    {
+      "order": 3, "name": "인프라 정비",
+      "steps": [
+        { "actor": "하수도 정비 작업자", "lane": "FIELD", "ncsJob": "sewerage", "action": "하수관로 조사·굴착·보수, 통수 시험", "handoffTo": "설비 설치 작업자" },
+        { "actor": "데이터 분석 AI", "lane": "AI", "ncsJob": "data-analysis", "action": "관로 센서·정비이력 모니터링, 결함 우선순위 산출", "handoffTo": "하수도 정비 작업자" }
+      ]
+    },
+    {
+      "order": 4, "name": "재설치·시운전",
+      "steps": [
+        { "actor": "기계설비 설치 작업자", "lane": "FIELD", "ncsJob": "equipment-installation", "action": "신규 설비 반입·설치·배관/배선 연결·시운전", "handoffTo": "프로젝트 총괄" }
+      ]
+    },
+    {
+      "order": 5, "name": "인수·운영이관",
+      "steps": [
+        { "actor": "프로젝트 총괄(PM)", "lane": "EDGE", "ncsJob": "project-management", "action": "준공 검수, 인수인계 문서 확인, 운영 이관", "handoffTo": null, "isGate": true }
+      ]
+    }
+  ],
+  "handoffRisks": [
+    "철거 전 법무·인허가 게이트(석면조사·해체심의) 미통과 시 위법. EDGE 승인 필수.",
+    "FIELD 작업 간 순서 의존(철거→하수도→설치)이 강해 일정 핸드오프 지연이 전체 공정 리스크."
+  ]
+}

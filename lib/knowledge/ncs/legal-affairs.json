@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "법률사무",
+    "aliases": ["법무", "법률사무원", "paralegal", "계약·컴플라이언스"],
+    "classification": {
+      "major": { "code": "05", "name": "법률·경찰·소방·교도·국방" },
+      "middle": { "code": "0501", "name": "법률" },
+      "minor": { "code": "050101", "name": "법무·심사" },
+      "detail": { "code": "0501010103", "name": "법률사무" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "법적 책임·리스크 판단과 최종 검토는 위임 불가(Edge). 단, 계약서 1차 검토·조항 추출·판례 검색은 AI가 초안을 만들고 인간이 승인하는 협업 구조에 적합.",
+    "competencyUnits": [
+      {
+        "code": "0501010103_v1",
+        "name": "계약 문서 관리",
+        "level": 5,
+        "elements": [
+          {
+            "name": "계약서 검토하기",
+            "performanceCriteria": [
+              "계약 유형별 필수 기재사항의 누락 여부를 확인할 수 있다.",
+              "독소조항·불리한 조건을 식별하여 수정 의견을 제시할 수 있다.",
+              "관련 법령·내부 규정과의 정합성을 검토할 수 있다."
+            ]
+          },
+          {
+            "name": "계약 이력 관리하기",
+            "performanceCriteria": [
+              "계약 체결·갱신·해지 일정을 관리하고 통지할 수 있다.",
+              "계약 문서를 분류·보존·검색 가능한 체계로 관리할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "0501010103_v1_2",
+        "name": "법률 리스크 검토",
+        "level": 6,
+        "elements": [
+          {
+            "name": "규정 준수 점검하기",
+            "performanceCriteria": [
+              "사업 활동이 관련 법령·인허가 요건을 충족하는지 점검할 수 있다.",
+              "위반 가능성과 영향도를 평가하여 보고할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

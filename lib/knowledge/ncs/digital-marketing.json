@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "디지털 마케팅",
+    "aliases": ["콘텐츠 마케팅", "퍼포먼스 마케팅", "SNS 운영", "마케팅"],
+    "classification": {
+      "major": { "code": "08", "name": "문화·예술·디자인·방송" },
+      "middle": { "code": "0802", "name": "광고" },
+      "minor": { "code": "080201", "name": "광고" },
+      "detail": { "code": "0802010109", "name": "디지털 마케팅" }
+    },
+    "laneHint": "AI",
+    "embodimentBasis": "콘텐츠 생성·세그먼트 메시지·A/B 테스트·캠페인 집행은 AI 자동화 적합. 브랜드 톤·윤리·예산 최종 승인은 Edge가 게이트.",
+    "competencyUnits": [
+      {
+        "code": "0802010109_v1",
+        "name": "디지털 캠페인 기획·집행",
+        "level": 4,
+        "elements": [
+          {
+            "name": "타깃·채널 설정하기",
+            "performanceCriteria": [
+              "고객 세그먼트를 정의하고 채널별 도달 전략을 수립할 수 있다.",
+              "캠페인 목표(KPI)를 측정 가능하게 설정할 수 있다."
+            ]
+          },
+          {
+            "name": "콘텐츠 제작·배포하기",
+            "performanceCriteria": [
+              "채널 특성에 맞는 콘텐츠를 제작·게시할 수 있다.",
+              "A/B 테스트로 소재를 최적화할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "0802010109_v1_2",
+        "name": "성과 분석·최적화",
+        "level": 4,
+        "elements": [
+          {
+            "name": "성과 측정하기",
+            "performanceCriteria": [
+              "전환·이탈·ROAS 지표를 수집·분석할 수 있다.",
+              "분석 결과를 바탕으로 예산을 재배분할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
