@@ -1,0 +1,17 @@
+{
+  "supply": 42,
+  "samples": [
+    {
+      "title": "(목) 임상영양 수의사 — 반려동물 헬스케어",
+      "company": "MOCK Pet Health",
+      "qualification": "수의사 면허 필수, 임상영양 경험 우대 (목 데이터)",
+      "url": "https://www.rocketpunch.com/jobs"
+    },
+    {
+      "title": "(목) 펫푸드 R&D 담당",
+      "company": "MOCK Nutrition Lab",
+      "qualification": "식품/영양 전공, 배합 설계 경험 (목 데이터)",
+      "url": "https://www.rocketpunch.com/jobs"
+    }
+  ]
+}

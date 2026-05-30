@@ -1,0 +1,39 @@
+{
+  "personas": [
+    {
+      "label": "꼼꼼한 임상형",
+      "seniority": "SENIOR",
+      "years": 9,
+      "domain": "반려동물 임상영양",
+      "workPref": "HYBRID",
+      "reason": "처방 검증은 오진 리스크가 커 사람 판단이 가드레일이 되어야 함"
+    },
+    {
+      "label": "데이터 친화형",
+      "seniority": "MIDLEVEL",
+      "years": 5,
+      "domain": "수의·영양 데이터",
+      "workPref": "REMOTE",
+      "reason": "AI 추천을 임상 관점에서 검수하는 휴먼-인-더-루프"
+    },
+    {
+      "label": "현장 커뮤니케이터",
+      "seniority": "JUNIOR",
+      "years": 3,
+      "domain": "보호자 상담",
+      "workPref": "ONSITE",
+      "reason": "신뢰 구축과 정서적 응대는 위임 불가한 엣지 업무"
+    }
+  ],
+  "market": {
+    "supply": 0,
+    "samples": [
+      {
+        "title": "(목) 수의사 — 반려동물 헬스케어 스타트업",
+        "company": "MOCK Pet Health",
+        "qualification": "수의사 면허 필수, 임상영양 경험 우대",
+        "url": "https://www.rocketpunch.com/jobs"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "jobCategories": [
+    { "code": "vet", "label": "수의사" },
+    { "code": "counselor", "label": "고객상담사" },
+    { "code": "legal", "label": "법무담당자" },
+    { "code": "pm", "label": "프로젝트매니저" },
+    { "code": "delivery", "label": "배송기사" }
+  ],
+  "seniorities": [
+    { "code": "BEGINNER", "label": "신입" },
+    { "code": "JUNIOR", "label": "주니어" },
+    { "code": "MIDLEVEL", "label": "미들" },
+    { "code": "SENIOR", "label": "시니어" },
+    { "code": "EXECUTIVE", "label": "임원" }
+  ],
+  "employmentTypes": [
+    { "code": "ONSITE", "label": "상주" },
+    { "code": "HYBRID", "label": "하이브리드" },
+    { "code": "REMOTE", "label": "원격" }
+  ]
+}

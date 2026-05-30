@@ -1,0 +1,92 @@
+{
+  "project": {
+    "title": "프리미엄 반려동물 구독 커머스 조직설계",
+    "summary": "맞춤형 수의사 검수 반려동물 사료·간식을 월 구독 정기배송하는 프리미엄 커머스",
+    "targetCustomer": "반려동물 지출을 아끼지 않는 25~39세 1인가구·신혼",
+    "targetRevenue": 300000,
+    "durationMonths": 12,
+    "laborBudget": 24000,
+    "hasOffline": true
+  },
+  "roles": [
+    {
+      "id": "EDGE-001",
+      "title": "반려동물 영양·의료 감시자",
+      "lane": "EDGE",
+      "rationale": "수의사 기반 레시피 검수, 맞춤 배합 처방 최종 검증. 의료 리스크와 신뢰 판단 필수, 자동화 불가능한 전문 책임",
+      "jobCategoryQuery": "수의사",
+      "seniority": "SENIOR",
+      "workType": "HYBRID",
+      "estimatedAnnualSalary": 5000
+    },
+    {
+      "id": "EDGE-002",
+      "title": "고객 맞춤 상담 전문가",
+      "lane": "EDGE",
+      "rationale": "반려동물 건강상태·식이요구사항 청취 후 맞춤 배합 제안. 신뢰 구축, 윤리적 책임, 고위험 건강상담으로 위임 불가",
+      "jobCategoryQuery": "고객상담사",
+      "seniority": "MIDLEVEL",
+      "workType": "HYBRID",
+      "estimatedAnnualSalary": 3000
+    },
+    {
+      "id": "AI-001",
+      "title": "고객 데이터·추천 AI",
+      "lane": "AI",
+      "rationale": "고객 프로필, 구매패턴 분석. 맞춤 추천 알고리즘, 이탈 예측, 구독 자동갱신 관리 자동화",
+      "misoCapability": "추천 시스템, 이탈 예측 모델, 데이터 파이프라인, 자동화 워크플로우",
+      "estimatedMonthlyAiCost": 800
+    },
+    {
+      "id": "AI-002",
+      "title": "마케팅·콘텐츠 자동화 AI",
+      "lane": "AI",
+      "rationale": "이메일 캠프인, SNS 콘텐츠 생성, 세그먼트별 맞춤 메시지. 반복 업무 자동화",
+      "misoCapability": "자연어 생성, 이메일 자동화, 콘텐츠 스케줄링, A/B 테스트",
+      "estimatedMonthlyAiCost": 500
+    },
+    {
+      "id": "FIELD-001",
+      "title": "오프라인 샘플링·배송 담당",
+      "lane": "FIELD",
+      "rationale": "팝업 이벤트 샘플 배포, 고객 방문 배송·수령, 현장 반응 수집. 신체 활동 필수",
+      "jobCategoryQuery": "배송기사",
+      "seniority": "BEGINNER",
+      "workType": "ONSITE",
+      "estimatedAnnualSalary": 2400,
+      "fieldCost": {
+        "type": "per_visit",
+        "unit": 50,
+        "volume": 120
+      }
+    },
+    {
+      "id": "AI-003",
+      "title": "공급망·재고 최적화 AI",
+      "lane": "AI",
+      "rationale": "구독 수요 예측, 제조 발주 최적화, 창고 재고 자동 관리. 반복 결정 자동화",
+      "misoCapability": "수요예측, 재고최적화, 발주 자동화",
+      "estimatedMonthlyAiCost": 400
+    },
+    {
+      "id": "EDGE-003",
+      "title": "법무·규정 담당자",
+      "lane": "EDGE",
+      "rationale": "구독 약관, 환불 정책, 개인정보·건강 데이터 법적 관리. 위임 불가 최종 가드레일",
+      "jobCategoryQuery": "법무담당자",
+      "seniority": "MIDLEVEL",
+      "workType": "HYBRID",
+      "estimatedAnnualSalary": 2800
+    },
+    {
+      "id": "EDGE-004",
+      "title": "운영 총괄 PM",
+      "lane": "EDGE",
+      "rationale": "전체 구독 프로세스 모니터링, 고객 만족도 최종 판단, 신규 위험 대응. 맥락 판단 권한 필요",
+      "jobCategoryQuery": "프로젝트매니저",
+      "seniority": "SENIOR",
+      "workType": "HYBRID",
+      "estimatedAnnualSalary": 5000
+    }
+  ]
+}

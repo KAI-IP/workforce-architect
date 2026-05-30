@@ -11,6 +11,12 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // §5.2 3레인 색 체계
+        lane: {
+          ai: "#14b8a6", // teal
+          edge: "#8b5cf6", // purple
+          field: "#fb7185", // coral
+        },
       },
     },
   },
