@@ -71,6 +71,41 @@
     {
       "ncsMajor": "02 경영·회계·사무", "jobSlug": "cs-operations", "family": "고객서비스 운영",
       "salaryBySeniority": { "BEGINNER": [2600, 3000], "JUNIOR": [3000, 3600], "MIDLEVEL": [3600, 4600], "SENIOR": [4600, 6000], "EXECUTIVE": [6000, 8000] }
+    },
+    {
+      "ncsMajor": "02 경영·회계·사무", "jobSlug": "accounting", "family": "회계·세무",
+      "salaryBySeniority": { "BEGINNER": [2800, 3300], "JUNIOR": [3300, 4200], "MIDLEVEL": [4200, 5500], "SENIOR": [5500, 7500], "EXECUTIVE": [7500, 11000] }
+    },
+    {
+      "ncsMajor": "02 경영·회계·사무", "jobSlug": "hr-labor", "family": "인사·노무",
+      "salaryBySeniority": { "BEGINNER": [2900, 3400], "JUNIOR": [3400, 4300], "MIDLEVEL": [4300, 5600], "SENIOR": [5600, 7500], "EXECUTIVE": [7500, 11000] }
+    },
+    {
+      "ncsMajor": "20 정보통신", "jobSlug": "software-development", "family": "소프트웨어 개발",
+      "salaryBySeniority": { "BEGINNER": [3500, 4500], "JUNIOR": [4500, 6000], "MIDLEVEL": [6000, 8500], "SENIOR": [8500, 13000], "EXECUTIVE": [13000, 20000] }
+    },
+    {
+      "ncsMajor": "08 문화·예술·디자인·방송", "jobSlug": "ux-design", "family": "UX/UI 디자인",
+      "salaryBySeniority": { "BEGINNER": [3000, 3600], "JUNIOR": [3600, 4600], "MIDLEVEL": [4600, 6200], "SENIOR": [6200, 8500], "EXECUTIVE": [8500, 12000] }
+    },
+    {
+      "ncsMajor": "10 영업판매", "jobSlug": "sales", "family": "영업·세일즈",
+      "salaryBySeniority": { "BEGINNER": [2800, 3400], "JUNIOR": [3400, 4400], "MIDLEVEL": [4400, 6000], "SENIOR": [6000, 9000], "EXECUTIVE": [9000, 15000] }
+    },
+    {
+      "ncsMajor": "19 전기·전자", "jobSlug": "electrical-construction", "family": "전기공사·시공",
+      "salaryBySeniority": { "BEGINNER": [3000, 3600], "JUNIOR": [3600, 4500], "MIDLEVEL": [4500, 5800], "SENIOR": [5800, 7500], "EXECUTIVE": [7500, 10000] },
+      "fieldRate": { "hourly": [1.8, 3.0], "outsource_monthly": [400, 1000], "unit": "만원", "note": "전기공사 일당/도급 PoC 가정" }
+    },
+    {
+      "ncsMajor": "11 경비·청소", "jobSlug": "facility-security", "family": "시설경비·관리",
+      "salaryBySeniority": { "BEGINNER": [2500, 2900], "JUNIOR": [2900, 3300], "MIDLEVEL": [3300, 3900], "SENIOR": [3900, 4800], "EXECUTIVE": [4800, 6000] },
+      "fieldRate": { "outsource_monthly": [250, 450], "unit": "만원", "note": "상주 경비 월 도급 PoC 가정" }
+    },
+    {
+      "ncsMajor": "13 음식서비스", "jobSlug": "cooking", "family": "조리·푸드",
+      "salaryBySeniority": { "BEGINNER": [2600, 3100], "JUNIOR": [3100, 3700], "MIDLEVEL": [3700, 4700], "SENIOR": [4700, 6200], "EXECUTIVE": [6200, 9000] },
+      "fieldRate": { "hourly": [1.0, 1.8], "unit": "만원", "note": "조리 시급/일당 PoC 가정" }
     }
   ],
   "aiOpsCostReference": {

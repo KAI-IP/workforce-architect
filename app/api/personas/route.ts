@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server";
-import type { Persona, Role } from "@/lib/types";
+import type { Persona, Role, Seniority } from "@/lib/types";
 import mockPersonas from "@/lib/mocks/personas.json";
 import { misoChat, extractJson } from "@/lib/miso";
 import { searchJobs, parseJobs, type JobSample } from "@/lib/rocketpunch";
-import { buildRoleGrounding } from "@/lib/knowledge";
+import { buildRoleGrounding, matchNcsJob, salaryRange } from "@/lib/knowledge";
+
+const SENIORITIES: Seniority[] = ["BEGINNER", "JUNIOR", "MIDLEVEL", "SENIOR", "EXECUTIVE"];
+
+// P0 노동비용표: 역할 매칭된 NCS 직군의 시니어리티별 시장 연봉 레인지 (서버에서 계산 → 클라 번들 경량)
+function ncsSalaryInfo(role: Role) {
+  const job = matchNcsJob(role.jobCategoryQuery, role.title);
+  if (!job) return null;
+  const salaryBySeniority = Object.fromEntries(
+    SENIORITIES.map((s) => [s, salaryRange(job.slug, s)]),
+  ) as Record<Seniority, [number, number] | null>;
+  return { title: job.title, slug: job.slug, salaryBySeniority };
+}
 
 export const runtime = "nodejs";
 
@@ -35,6 +47,7 @@ export async function POST(req: Request) {
   }
 
   const market = await getMarket(role);
+  const ncs = ncsSalaryInfo(role);
 
   // 페르소나 합성 — §2: 아키텍트 MISO 앱 재사용(query만 다르게)
   const key = process.env.MISO_ARCHITECT_KEY;
@@ -42,6 +55,9 @@ export async function POST(req: Request) {
     return NextResponse.json({
       personas: mockPersonas.personas as Persona[],
       market: { supply: market.supply, samples: market.samples },
+      ncs,
+      personasDegraded: true,
+      marketDegraded: market.degraded,
       degraded: true,
     });
   }
@@ -78,12 +94,18 @@ export async function POST(req: Request) {
     return NextResponse.json({
       personas,
       market: { supply: market.supply, samples: market.samples },
+      ncs,
+      personasDegraded: false,
+      marketDegraded: market.degraded,
       degraded: market.degraded,
     });
   } catch (err) {
     return NextResponse.json({
       personas: mockPersonas.personas as Persona[],
       market: { supply: market.supply, samples: market.samples },
+      ncs,
+      personasDegraded: true,
+      marketDegraded: market.degraded,
       degraded: true,
       error: String(err),
     });

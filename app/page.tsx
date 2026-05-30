@@ -6,6 +6,7 @@ import OrgCanvas from "@/components/OrgCanvas";
 import BalanceSheet from "@/components/BalanceSheet";
 import RefinePanel from "@/components/RefinePanel";
 import PublishPreview from "@/components/PublishPreview";
+import NLBriefInput from "@/components/NLBriefInput";
 import design from "@/lib/mocks/design.json";
 import { computeBalance } from "@/lib/cost";
 import type { Brief, OrgDesign, Role } from "@/lib/types";
@@ -20,6 +21,14 @@ export default function Home() {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [compressing, setCompressing] = useState(false);
   const [publishOpen, setPublishOpen] = useState(false);
+  const [formInitial, setFormInitial] = useState<Brief>(mock.project);
+  const [formKey, setFormKey] = useState(0);
+
+  // 자연어 → Brief 추출 → 폼 리마운트로 채움
+  function handleParsed(brief: Brief) {
+    setFormInitial(brief);
+    setFormKey((k) => k + 1);
+  }
 
   // P6: 페르소나 팝오버의 시니어리티 조절 → 역할 패치 → 비용·밸런스 즉시 갱신
   function updateRole(roleId: string, patch: Partial<Role>) {
@@ -111,7 +120,8 @@ export default function Home() {
         {/* 좌측: 브리프 폼 */}
         <section>
           <h2 className="mb-3 text-sm font-semibold text-white/80">사업 브리프</h2>
-          <BriefForm initial={orgDesign.project} onSubmit={handleDesign} loading={loading} />
+          <NLBriefInput onParsed={handleParsed} />
+          <BriefForm key={formKey} initial={formInitial} onSubmit={handleDesign} loading={loading} />
           {designed && (
             <p className="mt-3 text-xs">
               {degraded ? (
@@ -146,6 +156,11 @@ export default function Home() {
         <BalanceSheet design={orgDesign} onCompress={handleCompress} compressing={compressing} />
         <RefinePanel onRefine={refine} busy={compressing} />
       </section>
+
+      <footer className="mt-10 border-t border-white/10 pt-4 text-[11px] leading-relaxed text-white/30">
+        비용·연봉은 NCS·공개 노동통계 기반 PoC 가정값(재무자문 아님). 인간 역할은 로켓펀치 공급량으로
+        검증하며, AI/미션은 MISO로 실제 실행됩니다. 외부 API 미응답 시 목 데이터로 graceful fallback.
+      </footer>
     </main>
   );
 }

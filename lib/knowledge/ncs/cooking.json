@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "조리·푸드",
+    "aliases": ["조리", "요리", "주방", "셰프", "푸드", "급식"],
+    "classification": {
+      "major": { "code": "13", "name": "음식서비스" },
+      "middle": { "code": "1301", "name": "조리" },
+      "minor": { "code": "130101", "name": "음식조리" },
+      "detail": { "code": "1301010101", "name": "한식조리" }
+    },
+    "laneHint": "FIELD",
+    "embodimentBasis": "손질·조리·플레이팅은 현장 신체작업(Field). 레시피 표준화·발주 예측·원가 계산은 AI 보조.",
+    "competencyUnits": [
+      {
+        "code": "1301010101_v1",
+        "name": "조리 준비",
+        "level": 2,
+        "elements": [
+          {
+            "name": "식재료 관리하기",
+            "performanceCriteria": [
+              "식재료의 신선도·규격을 확인하여 검수·보관할 수 있다.",
+              "위생 기준에 따라 전처리할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "1301010101_v1_2",
+        "name": "조리·품질 관리",
+        "level": 3,
+        "elements": [
+          {
+            "name": "조리하기",
+            "performanceCriteria": [
+              "표준 레시피에 따라 일정한 품질로 조리할 수 있다.",
+              "온도·시간을 관리하여 안전하게 조리할 수 있다."
+            ]
+          },
+          {
+            "name": "위생 관리하기",
+            "performanceCriteria": [
+              "주방 위생·교차오염 방지 기준을 준수할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

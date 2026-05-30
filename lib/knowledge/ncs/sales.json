@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "영업·세일즈",
+    "aliases": ["영업", "세일즈", "B2B 영업", "기업영업", "어카운트"],
+    "classification": {
+      "major": { "code": "10", "name": "영업판매" },
+      "middle": { "code": "1001", "name": "영업" },
+      "minor": { "code": "100101", "name": "일반·해외영업" },
+      "detail": { "code": "1001010101", "name": "영업 관리" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "리드 스코어링·이메일 시퀀스·견적 생성은 AI 자동화 적합. 신뢰 구축·협상·관계 관리의 클로징은 Edge.",
+    "competencyUnits": [
+      {
+        "code": "1001010101_v1",
+        "name": "영업 기회 관리",
+        "level": 4,
+        "elements": [
+          {
+            "name": "잠재고객 발굴하기",
+            "performanceCriteria": [
+              "목표 시장을 분석하여 잠재고객을 발굴·분류할 수 있다.",
+              "니즈를 파악하여 가치 제안을 구성할 수 있다."
+            ]
+          },
+          {
+            "name": "상담·제안하기",
+            "performanceCriteria": [
+              "고객 요구에 맞는 솔루션을 제안하고 이견을 처리할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "1001010101_v1_2",
+        "name": "수주·고객관리",
+        "level": 5,
+        "elements": [
+          {
+            "name": "협상·계약하기",
+            "performanceCriteria": [
+              "가격·조건을 협상하여 상호 이익의 계약을 체결할 수 있다."
+            ]
+          },
+          {
+            "name": "고객 유지하기",
+            "performanceCriteria": [
+              "구매 후 관리로 재구매·추천을 유도할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

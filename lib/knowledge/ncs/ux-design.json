@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "UX/UI 디자인",
+    "aliases": ["UX", "UI", "디자인", "프로덕트 디자인", "서비스 기획"],
+    "classification": {
+      "major": { "code": "08", "name": "문화·예술·디자인·방송" },
+      "middle": { "code": "0803", "name": "디자인" },
+      "minor": { "code": "080303", "name": "디지털디자인" },
+      "detail": { "code": "0803030201", "name": "UX/UI 디자인" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "시안 생성·에셋 변형은 AI 보조 가능. 사용자 리서치·정보구조·접근성 의사결정은 맥락·공감 기반 Edge.",
+    "competencyUnits": [
+      {
+        "code": "0803030201_v1",
+        "name": "사용자 리서치·정의",
+        "level": 4,
+        "elements": [
+          {
+            "name": "사용자 조사하기",
+            "performanceCriteria": [
+              "인터뷰·설문·행동데이터로 사용자 니즈를 도출할 수 있다.",
+              "페르소나·여정맵으로 문제를 정의할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "0803030201_v1_2",
+        "name": "인터페이스 설계",
+        "level": 4,
+        "elements": [
+          {
+            "name": "정보구조 설계하기",
+            "performanceCriteria": [
+              "과업 흐름에 맞는 정보구조·내비게이션을 설계할 수 있다.",
+              "와이어프레임·프로토타입으로 설계를 검증할 수 있다."
+            ]
+          },
+          {
+            "name": "디자인 시스템 적용하기",
+            "performanceCriteria": [
+              "일관된 컴포넌트·접근성 기준을 적용할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

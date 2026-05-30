@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "회계·세무",
+    "aliases": ["회계", "경리", "세무", "재무회계", "결산"],
+    "classification": {
+      "major": { "code": "02", "name": "경영·회계·사무" },
+      "middle": { "code": "0203", "name": "재무·회계" },
+      "minor": { "code": "020301", "name": "회계" },
+      "detail": { "code": "0203010101", "name": "전표·결산 관리" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "전표 입력·세금계산서 대사·정형 리포트는 AI/RPA 자동화 적합. 결산 확정·세무 신고·감사 대응의 최종 책임은 Edge.",
+    "competencyUnits": [
+      {
+        "code": "0203010101_v1",
+        "name": "전표 처리·기장",
+        "level": 3,
+        "elements": [
+          {
+            "name": "거래 분개하기",
+            "performanceCriteria": [
+              "증빙에 근거하여 거래를 계정과목별로 분개할 수 있다.",
+              "세금계산서·영수증의 적격 여부를 확인할 수 있다."
+            ]
+          },
+          {
+            "name": "장부 대사하기",
+            "performanceCriteria": [
+              "보조부와 총계정원장을 대사하여 차이를 검증할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "0203010101_v1_2",
+        "name": "결산·세무 신고",
+        "level": 5,
+        "elements": [
+          {
+            "name": "결산 정리하기",
+            "performanceCriteria": [
+              "기간 손익·자산부채를 정리하여 재무제표를 작성할 수 있다.",
+              "결산 오류·이상 항목을 검토하여 수정할 수 있다."
+            ]
+          },
+          {
+            "name": "세무 신고하기",
+            "performanceCriteria": [
+              "부가세·법인세 신고서를 기한 내 작성·제출할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

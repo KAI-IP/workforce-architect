@@ -16,6 +16,14 @@ import equipmentInstallation from "./ncs/equipment-installation.json";
 import digitalMarketing from "./ncs/digital-marketing.json";
 import dataAnalysis from "./ncs/data-analysis.json";
 import csOperations from "./ncs/cs-operations.json";
+import accounting from "./ncs/accounting.json";
+import hrLabor from "./ncs/hr-labor.json";
+import softwareDevelopment from "./ncs/software-development.json";
+import uxDesign from "./ncs/ux-design.json";
+import sales from "./ncs/sales.json";
+import electricalConstruction from "./ncs/electrical-construction.json";
+import facilitySecurity from "./ncs/facility-security.json";
+import cooking from "./ncs/cooking.json";
 
 import laborCost from "./labor-cost/labor-cost-table.json";
 import subscriptionCommerce from "./process-maps/subscription-commerce.json";
@@ -73,6 +81,14 @@ const RAW: Record<string, RawNcsFile> = {
   "digital-marketing": digitalMarketing,
   "data-analysis": dataAnalysis,
   "cs-operations": csOperations,
+  accounting,
+  "hr-labor": hrLabor,
+  "software-development": softwareDevelopment,
+  "ux-design": uxDesign,
+  sales,
+  "electrical-construction": electricalConstruction,
+  "facility-security": facilitySecurity,
+  cooking,
 } as unknown as Record<string, RawNcsFile>;
 
 const CATALOG = ncsIndex.jobs as CatalogEntry[];

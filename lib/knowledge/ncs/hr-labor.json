@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "인사·노무",
+    "aliases": ["인사", "노무", "HR", "채용", "인사관리", "급여"],
+    "classification": {
+      "major": { "code": "02", "name": "경영·회계·사무" },
+      "middle": { "code": "0202", "name": "기획·사무·인사" },
+      "minor": { "code": "020202", "name": "인사·조직" },
+      "detail": { "code": "0202020101", "name": "인사기획·운영" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "공고 작성·서류 스크리닝·급여 계산은 AI 보조 가능. 채용 최종결정·노무 분쟁·평가 피드백 등 신뢰·윤리 판단은 Edge.",
+    "competencyUnits": [
+      {
+        "code": "0202020101_v1",
+        "name": "채용 관리",
+        "level": 4,
+        "elements": [
+          {
+            "name": "채용 계획하기",
+            "performanceCriteria": [
+              "직무기술서에 근거하여 채용 요건·전형을 설계할 수 있다.",
+              "채용 채널·일정을 수립할 수 있다."
+            ]
+          },
+          {
+            "name": "선발·검증하기",
+            "performanceCriteria": [
+              "지원자 역량을 구조화 면접 기준으로 평가할 수 있다.",
+              "평판·자격을 검증하여 채용을 확정할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "0202020101_v1_2",
+        "name": "노무·급여 관리",
+        "level": 4,
+        "elements": [
+          {
+            "name": "근로조건 관리하기",
+            "performanceCriteria": [
+              "근로계약·취업규칙을 법령에 맞게 관리할 수 있다.",
+              "근태·휴가·4대보험을 정확히 처리할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

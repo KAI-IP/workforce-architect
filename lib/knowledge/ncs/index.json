@@ -21,6 +21,14 @@
     { "slug": "equipment-installation", "title": "기계설비 설치·시운전", "major": "15", "laneHint": "FIELD", "keywords": ["설치", "설비", "기계설비", "시공", "시운전", "설치기사"] },
     { "slug": "digital-marketing", "title": "디지털 마케팅", "major": "08", "laneHint": "AI", "keywords": ["마케팅", "콘텐츠", "퍼포먼스", "SNS", "광고", "캠페인"] },
     { "slug": "data-analysis", "title": "데이터 분석", "major": "20", "laneHint": "AI", "keywords": ["데이터", "분석", "추천", "예측", "모델링", "BI", "AI"] },
-    { "slug": "cs-operations", "title": "고객서비스 운영", "major": "02", "laneHint": "AI", "keywords": ["CS", "고객지원", "고객서비스", "컨택센터", "주문", "응대"] }
+    { "slug": "cs-operations", "title": "고객서비스 운영", "major": "02", "laneHint": "AI", "keywords": ["CS", "고객지원", "고객서비스", "컨택센터", "주문", "응대"] },
+    { "slug": "accounting", "title": "회계·세무", "major": "02", "laneHint": "EDGE", "keywords": ["회계", "경리", "세무", "재무", "결산", "전표"] },
+    { "slug": "hr-labor", "title": "인사·노무", "major": "02", "laneHint": "EDGE", "keywords": ["인사", "노무", "HR", "채용", "급여", "조직"] },
+    { "slug": "software-development", "title": "소프트웨어 개발", "major": "20", "laneHint": "EDGE", "keywords": ["개발", "백엔드", "프론트엔드", "엔지니어", "SW", "프로그래밍"] },
+    { "slug": "ux-design", "title": "UX/UI 디자인", "major": "08", "laneHint": "EDGE", "keywords": ["UX", "UI", "디자인", "프로덕트", "기획", "와이어프레임"] },
+    { "slug": "sales", "title": "영업·세일즈", "major": "10", "laneHint": "EDGE", "keywords": ["영업", "세일즈", "기업영업", "어카운트", "수주", "B2B"] },
+    { "slug": "electrical-construction", "title": "전기공사·시공", "major": "19", "laneHint": "FIELD", "keywords": ["전기", "전기공사", "배선", "결선", "내선", "전기설비"] },
+    { "slug": "facility-security", "title": "시설경비·관리", "major": "11", "laneHint": "FIELD", "keywords": ["경비", "시설관리", "보안", "방호", "순찰", "출입통제"] },
+    { "slug": "cooking", "title": "조리·푸드", "major": "13", "laneHint": "FIELD", "keywords": ["조리", "요리", "주방", "셰프", "급식", "푸드"] }
   ]
 }

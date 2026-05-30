@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "시설경비·관리",
+    "aliases": ["경비", "시설관리", "보안", "방호", "시설 운영"],
+    "classification": {
+      "major": { "code": "11", "name": "경비·청소" },
+      "middle": { "code": "1101", "name": "경비·검표" },
+      "minor": { "code": "110101", "name": "경비" },
+      "detail": { "code": "1101010101", "name": "시설경비" }
+    },
+    "laneHint": "FIELD",
+    "embodimentBasis": "순찰·출입통제·현장 대응은 신체 상주 필요(Field). CCTV 이상탐지·출입 로그 분석은 AI 보조.",
+    "competencyUnits": [
+      {
+        "code": "1101010101_v1",
+        "name": "출입·순찰 관리",
+        "level": 2,
+        "elements": [
+          {
+            "name": "출입 통제하기",
+            "performanceCriteria": [
+              "출입 권한을 확인하여 인원·차량 출입을 통제할 수 있다.",
+              "방문 기록을 관리하고 미승인 출입을 차단할 수 있다."
+            ]
+          },
+          {
+            "name": "순찰하기",
+            "performanceCriteria": [
+              "순찰 경로·주기에 따라 시설 이상 유무를 점검할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "1101010101_v1_2",
+        "name": "비상 대응",
+        "level": 3,
+        "elements": [
+          {
+            "name": "상황 대응하기",
+            "performanceCriteria": [
+              "화재·침입 등 비상 상황을 초기 대응하고 신고할 수 있다.",
+              "대피·통제 절차를 수행하고 보고할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

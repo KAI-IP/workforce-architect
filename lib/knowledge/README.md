@@ -6,7 +6,7 @@
 
 ```
 lib/knowledge/
-├─ ncs/                      # NCS 국가직무능력표준 시드 (직무 12개)
+├─ ncs/                      # NCS 국가직무능력표준 시드 (직무 20개)
 │  ├─ index.json             #   카탈로그 (jobCategoryQuery → 직무 매칭 키워드)
 │  └─ <slug>.json            #   직무별: 분류코드 + 능력단위 → 수행준거 + 레인근거
 ├─ labor-cost/
@@ -14,12 +14,18 @@ lib/knowledge/
 ├─ process-maps/
 │  ├─ subscription-commerce.json   # 구독커머스 업무흐름(누가·무엇을·순서·핸드오프)
 │  └─ urban-redesign.json          # 도시재설계 업무흐름(철거·하수도·설치 등 Field 중심)
+├─ miso-rag/                 # ⚙️ 자동생성: MISO 지식(RAG) 업로드용 마크다운 (Track B)
+│  ├─ corpus.md              #   전체 1파일(원샷 업로드용)
+│  ├─ ncs-<slug>.md          #   직무별 마크다운
+│  ├─ labor-cost.md          #   노동비용 표(마크다운)
+│  └─ process-<slug>.md      #   프로세스 맵 마크다운
 ├─ index.ts                  # 로더 + 그라운딩 다이제스트 생성 (라우트에서 import)
+├─ scripts/build-rag-corpus.ts  # miso-rag/*.md 생성기 (index.json 동적 순회)
 ├─ scripts/fetch-ncs.ts      # (선택) data.go.kr 권위 데이터로 시드 갱신
 └─ README.md                 # 이 문서
 ```
 
-직무 12개: 수의·상담·법률사무·프로젝트관리·식품품질(EDGE) / 택배배송·하수도·철거·설비설치(FIELD) / 디지털마케팅·데이터분석·CS운영(AI). NCS 3레인(AI/Edge/Field)을 모두 커버하고 두 프로세스 맵에 등장하는 직무로 구성.
+직무 20개: 수의·상담·법률사무·프로젝트관리·식품품질·회계세무·인사노무·소프트웨어개발·UX디자인·영업(EDGE) / 택배배송·하수도·철거·설비설치·전기공사·시설경비·조리(FIELD) / 디지털마케팅·데이터분석·CS운영(AI). NCS 3레인(AI/Edge/Field)을 모두 커버하고 NCS 대분류 01·02·05·06·07·08·09·10·11·13·14·15·19·20·21·23 을 포함. 두 프로세스 맵에 등장하는 직무를 모두 포함.
 
 ## 연결 방식 — 2-트랙
 

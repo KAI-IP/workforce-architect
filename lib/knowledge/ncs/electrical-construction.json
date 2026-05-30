@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "전기공사·시공",
+    "aliases": ["전기공사", "전기설비", "배선", "전기 시공", "내선공사"],
+    "classification": {
+      "major": { "code": "19", "name": "전기·전자" },
+      "middle": { "code": "1901", "name": "전기" },
+      "minor": { "code": "190102", "name": "전기공사" },
+      "detail": { "code": "1901020101", "name": "내선공사" }
+    },
+    "laneHint": "FIELD",
+    "embodimentBasis": "배관·배선·결선·계측은 현장 신체작업(Field). 부하 계산·도면·검사성적서 작성은 Edge/AI 보조.",
+    "competencyUnits": [
+      {
+        "code": "1901020101_v1",
+        "name": "전기설비 시공 준비",
+        "level": 3,
+        "elements": [
+          {
+            "name": "시공 도면 확인하기",
+            "performanceCriteria": [
+              "전기 도면·시방서를 확인하여 자재·공정을 산출할 수 있다.",
+              "안전기준(KEC)에 따른 시공 조건을 확인할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "1901020101_v1_2",
+        "name": "배선·결선 및 검사",
+        "level": 3,
+        "elements": [
+          {
+            "name": "배선·결선하기",
+            "performanceCriteria": [
+              "배관·배선을 도면에 따라 시공하고 결선할 수 있다.",
+              "활선 작업 시 안전수칙을 준수할 수 있다."
+            ]
+          },
+          {
+            "name": "절연·동작 시험하기",
+            "performanceCriteria": [
+              "절연저항·접지를 측정하여 기준 적합 여부를 확인할 수 있다.",
+              "통전·동작 시험으로 설비 정상을 확인할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

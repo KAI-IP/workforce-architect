@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "p0-seed-1",
+  "provenance": {
+    "source": "ncs-framework-curated",
+    "authority": "한국산업인력공단 NCS",
+    "refreshApi": "data.go.kr 15128213 / 15063879",
+    "note": "실제 NCS 분류·능력단위 체계를 기준으로 PoC용 큐레이션."
+  },
+  "job": {
+    "title": "소프트웨어 개발",
+    "aliases": ["개발", "백엔드", "프론트엔드", "엔지니어", "응용SW", "서비스 개발"],
+    "classification": {
+      "major": { "code": "20", "name": "정보통신" },
+      "middle": { "code": "2001", "name": "정보기술" },
+      "minor": { "code": "200102", "name": "정보기술개발" },
+      "detail": { "code": "2001020201", "name": "응용SW엔지니어링" }
+    },
+    "laneHint": "EDGE",
+    "embodimentBasis": "코드 생성·테스트·문서화는 AI 보조가 빠르게 잠식 중. 아키텍처 결정·보안 설계·운영 책임은 Edge가 게이트.",
+    "competencyUnits": [
+      {
+        "code": "2001020201_v1",
+        "name": "애플리케이션 설계·구현",
+        "level": 5,
+        "elements": [
+          {
+            "name": "요구사항 분석하기",
+            "performanceCriteria": [
+              "사용자 요구를 기능·비기능 요건으로 구체화할 수 있다.",
+              "요건을 데이터·인터페이스 설계로 변환할 수 있다."
+            ]
+          },
+          {
+            "name": "구현·테스트하기",
+            "performanceCriteria": [
+              "설계에 따라 모듈을 구현하고 단위 테스트를 작성할 수 있다.",
+              "코드 리뷰·정적분석으로 품질·보안을 점검할 수 있다."
+            ]
+          }
+        ]
+      },
+      {
+        "code": "2001020201_v1_2",
+        "name": "배포·운영",
+        "level": 4,
+        "elements": [
+          {
+            "name": "배포 자동화하기",
+            "performanceCriteria": [
+              "CI/CD 파이프라인으로 빌드·배포를 자동화할 수 있다.",
+              "장애·성능 지표를 모니터링하고 대응할 수 있다."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

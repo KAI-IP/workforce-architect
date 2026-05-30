@@ -5,6 +5,12 @@ import type { Persona, PersonaResult, Role, Seniority } from "@/lib/types";
 import { LANE_META } from "@/lib/lanes";
 import { roleCost, SENIORITY_MULT } from "@/lib/cost";
 
+interface NcsInfo {
+  title: string;
+  slug: string;
+  salaryBySeniority: Record<Seniority, [number, number] | null>;
+}
+
 const SENIORITY_ORDER: Seniority[] = ["BEGINNER", "JUNIOR", "MIDLEVEL", "SENIOR", "EXECUTIVE"];
 const SENIORITY_KO: Record<Seniority, string> = {
   BEGINNER: "신입",
@@ -26,8 +32,22 @@ export default function PersonaPopover({
   const meta = LANE_META[role.lane];
   const [data, setData] = useState<PersonaResult | null>(null);
   const [loading, setLoading] = useState(true);
-  const [degraded, setDegraded] = useState(false);
+  const [personasDegraded, setPersonasDegraded] = useState(false);
+  const [marketDegraded, setMarketDegraded] = useState(false);
   const [sen, setSen] = useState<Seniority>(role.seniority ?? "MIDLEVEL");
+  const [ncs, setNcs] = useState<NcsInfo | null>(null);
+
+  // P0 노동비용표(서버 계산): 직군·시니어리티별 시장 연봉 레인지 (연봉 보정 근거)
+  const marketRange = ncs?.salaryBySeniority?.[sen] ?? null;
+  const baseSalary = role.estimatedAnnualSalary;
+  const salaryFlag =
+    marketRange && baseSalary
+      ? baseSalary < marketRange[0]
+        ? "low"
+        : baseSalary > marketRange[1]
+          ? "high"
+          : "ok"
+      : null;
 
   useEffect(() => {
     let alive = true;
@@ -41,9 +61,15 @@ export default function PersonaPopover({
       .then((j) => {
         if (!alive) return;
         setData({ personas: j.personas ?? [], market: j.market ?? { supply: 0, samples: [] } });
-        setDegraded(Boolean(j.degraded));
+        setNcs((j.ncs as NcsInfo) ?? null);
+        setPersonasDegraded(Boolean(j.personasDegraded ?? j.degraded));
+        setMarketDegraded(Boolean(j.marketDegraded ?? j.degraded));
       })
-      .catch(() => alive && setDegraded(true))
+      .catch(() => {
+        if (!alive) return;
+        setPersonasDegraded(true);
+        setMarketDegraded(true);
+      })
       .finally(() => alive && setLoading(false));
     return () => {
       alive = false;
@@ -98,6 +124,15 @@ export default function PersonaPopover({
               ≈ {previewCost.toLocaleString()}만/년
             </span>
           </div>
+          {/* P0 노동비용표 기반 시장 연봉 레인지 + 보정 플래그 */}
+          {marketRange && (
+            <p className="mb-2 text-[10px] text-white/45">
+              시장 연봉 {marketRange[0].toLocaleString()}~{marketRange[1].toLocaleString()}만 (NCS {ncs?.title})
+              {salaryFlag === "low" && <span className="ml-1 text-amber-400">· 입력 연봉이 시장 하단 미만</span>}
+              {salaryFlag === "high" && <span className="ml-1 text-amber-400">· 입력 연봉이 시장 상단 초과</span>}
+              {salaryFlag === "ok" && <span className="ml-1 text-emerald-400">· 시장 범위 내</span>}
+            </p>
+          )}
           <div className="flex gap-1">
             {SENIORITY_ORDER.map((s) => (
               <button
@@ -116,7 +151,17 @@ export default function PersonaPopover({
         </div>
 
         {/* 페르소나 3명 */}
-        <h4 className="mb-2 text-xs font-semibold text-white/70">합성 페르소나 3</h4>
+        <h4 className="mb-2 flex items-center gap-2 text-xs font-semibold text-white/70">
+          합성 페르소나 3
+          {!loading &&
+            (personasDegraded ? (
+              <span className="rounded-full bg-amber-400/15 px-1.5 py-0.5 text-[9px] text-amber-400">목</span>
+            ) : (
+              <span className="rounded-full bg-emerald-400/15 px-1.5 py-0.5 text-[9px] text-emerald-400">
+                MISO 실합성
+              </span>
+            ))}
+        </h4>
         {loading ? (
           <p className="py-6 text-center text-xs text-white/40">페르소나 합성 중…</p>
         ) : (
@@ -143,7 +188,7 @@ export default function PersonaPopover({
           <div className="mb-2 flex items-center justify-between">
             <span className="text-xs font-semibold text-white/70">시장 근거 (로켓펀치)</span>
             <span className="text-xs font-bold" style={{ color: meta.color }}>
-              공급 {data?.market.supply?.toLocaleString() ?? "…"}건{degraded ? "*" : ""}
+              공급 {data?.market.supply?.toLocaleString() ?? "…"}건{marketDegraded ? "*" : ""}
             </span>
           </div>
           <div className="space-y-1.5">
@@ -165,9 +210,9 @@ export default function PersonaPopover({
               <p className="text-[11px] text-white/30">시장 공고 샘플 없음</p>
             )}
           </div>
-          {degraded && (
+          {marketDegraded && (
             <p className="mt-2 text-[10px] text-amber-400/80">
-              * 일부 목 데이터 (MISO/로켓펀치 미응답 시 graceful fallback)
+              * 로켓펀치 API 미응답 → 시장 데이터는 목 (페르소나 합성은 별도)
             </p>
           )}
         </div>
