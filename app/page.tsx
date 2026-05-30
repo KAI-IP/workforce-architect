@@ -3,7 +3,9 @@
 import { useState } from "react";
 import BriefForm from "@/components/BriefForm";
 import OrgCanvas from "@/components/OrgCanvas";
+import BalanceSheet from "@/components/BalanceSheet";
 import design from "@/lib/mocks/design.json";
+import { computeBalance } from "@/lib/cost";
 import type { Brief, OrgDesign, Role } from "@/lib/types";
 
 const mock = design as OrgDesign;
@@ -14,6 +16,7 @@ export default function Home() {
   const [degraded, setDegraded] = useState(false);
   const [designed, setDesigned] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [compressing, setCompressing] = useState(false);
 
   // P6: 페르소나 팝오버의 시니어리티 조절 → 역할 패치 → 비용·밸런스 즉시 갱신
   function updateRole(roleId: string, patch: Partial<Role>) {
@@ -21,6 +24,32 @@ export default function Home() {
       ...d,
       roles: d.roles.map((r) => (r.id === roleId ? { ...r, ...patch } : r)),
     }));
+  }
+
+  // §5.4 [엣지로 압축] — 예산 초과 시 아키텍트 재호출 (conversationId 유지로 직전 설계 맥락 계승)
+  async function handleCompress() {
+    const bal = computeBalance(orgDesign);
+    setCompressing(true);
+    try {
+      const instruction =
+        `현재 인건비 합계가 예산을 ${bal.over}만원 초과한다(합계 ${bal.total}만, 예산 ${bal.budget}만). ` +
+        `공급이 얇거나 자동화 가능한 역할의 업무 일부를 AI로 이전하고, 인간 역할은 엣지 판단 중심으로 ` +
+        `축소·통합해 인건비 합계가 예산 이내로 들어오게 재설계하라. 지침의 JSON 스키마만 출력.`;
+      const res = await fetch("/api/architect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...orgDesign.project, instruction, conversationId }),
+      });
+      const json = await res.json();
+      console.log("[compress] response =", json);
+      if (json.design) setOrgDesign(json.design as OrgDesign);
+      setDegraded(Boolean(json.degraded));
+      setConversationId(json.conversationId ?? conversationId);
+    } catch (e) {
+      console.error("[compress] failed", e);
+    } finally {
+      setCompressing(false);
+    }
   }
 
   async function handleDesign(b: Brief) {
@@ -88,12 +117,16 @@ export default function Home() {
           </div>
           <OrgCanvas design={orgDesign} loading={loading} onRoleUpdate={updateRole} />
           <p className="pt-1 text-xs text-white/30">
-            인간 카드의 “시장 N건”은 로켓펀치 공급량입니다. (
-            <span className="text-white/40">*</span> = 로켓펀치 API 미응답 시 목 데이터)
-            다음 단계(P6~): 페르소나 팝오버 → 비용·밸런스 시트.
+            인간 카드 클릭 → 페르소나·시장근거. “시장 N건”은 로켓펀치 공급량 (
+            <span className="text-white/40">*</span> = API 미응답 시 목).
           </p>
         </section>
       </div>
+
+      {/* P7: 리소스 밸런스 시트 (전체 폭) */}
+      <section className="mt-8">
+        <BalanceSheet design={orgDesign} onCompress={handleCompress} compressing={compressing} />
+      </section>
     </main>
   );
 }
