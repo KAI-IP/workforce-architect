@@ -30,6 +30,14 @@ export default function DeckZone({
 }) {
   const roleById = (id: string) => roles.find((r) => r.id === id);
 
+  // #2 시각 강조: 인력을 배치할수록 빨강 → 초록. 선택 완성 %.
+  const humanTarget = Math.max(1, roles.filter((r) => r.lane !== "AI").length);
+  const pct = Math.min(100, Math.round((deck.length / humanTarget) * 100));
+  const hue = Math.round((pct / 100) * 120); // 0=빨강 → 120=초록
+  const zoneBg = `hsl(${hue} 85% 96%)`;
+  const zoneBorder = `hsl(${hue} 70% 78%)`;
+  const accent = `hsl(${hue} 65% 42%)`;
+
   const headerCopy = !deck.length
     ? "🃏 워크플로우 덱을 확인하세요 — 위 인간 카드에서 페르소나를 골라 [덱에 추가]하세요."
     : deck.length === 1
@@ -45,7 +53,10 @@ export default function DeckZone({
           : "조합을 평가합니다…";
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div
+      className="rounded-xl border-2 p-5 shadow-sm transition-colors duration-500"
+      style={{ background: zoneBg, borderColor: zoneBorder }}
+    >
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-semibold text-slate-700">운영 덱 (팀 조합 시뮬레이션)</h2>
         {review && deck.length > 1 && (
@@ -59,7 +70,23 @@ export default function DeckZone({
         )}
       </div>
 
-      <p className="mb-3 text-xs text-slate-500">{headerCopy}</p>
+      {/* #2 선택 완성 막대 */}
+      <div className="mb-3">
+        <div className="flex items-center justify-between text-xs font-bold" style={{ color: accent }}>
+          <span>선택 완성 {pct}%</span>
+          <span>{deck.length} / {humanTarget} 인력 배치</span>
+        </div>
+        <div className="mt-1 h-3 w-full overflow-hidden rounded-full bg-white/70 ring-1 ring-black/5">
+          <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, background: accent }} />
+        </div>
+        {pct < 100 && (
+          <p className="mt-1 text-[11px] font-medium" style={{ color: accent }}>
+            후보를 더 배치할수록 빨강 → 초록으로 바뀝니다. 적합한 인력을 채워 운영 가능성을 높이세요.
+          </p>
+        )}
+      </div>
+
+      <p className="mb-3 text-xs text-slate-600">{headerCopy}</p>
 
       {/* 덱 카드 (살짝 겹친 hand 느낌) */}
       {deck.length > 0 && (

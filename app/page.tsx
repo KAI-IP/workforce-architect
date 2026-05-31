@@ -12,6 +12,7 @@ import type { ClarifyQuestion } from "@/app/api/clarify/route";
 import DeckZone from "@/components/DeckZone";
 import WorkflowDeckDashboard from "@/components/WorkflowDeckDashboard";
 import TimeframeDashboard from "@/components/TimeframeDashboard";
+import NextSteps from "@/components/NextSteps";
 import design from "@/lib/mocks/design.json";
 import { computeBalance } from "@/lib/cost";
 import { estimateTimeline, effectiveProjectType } from "@/lib/timeline";
@@ -291,6 +292,9 @@ export default function Home() {
           onRoleUpdate={updateRole}
           onAddToDeck={addToDeck}
         />
+        <div className="mt-4">
+          <NextSteps design={orgDesign} timeline={timeline} />
+        </div>
       </section>
 
       <FlowArrow />
@@ -344,6 +348,18 @@ export default function Home() {
         비용·연봉은 NCS·공개 노동통계 기반 PoC 가정값(재무자문 아님). 인간 역할은 로켓펀치 공급량으로 검증하며,
         AI/미션은 MISO로 실제 실행됩니다. 외부 API 미응답 시 목 데이터로 graceful fallback.
       </footer>
+
+      {/* #3 아래로 스크롤 인디케이터 */}
+      <button
+        onClick={() => window.scrollBy({ top: Math.round(window.innerHeight * 0.82), behavior: "smooth" })}
+        className="fixed bottom-5 right-5 z-40 flex h-12 w-12 animate-bounce items-center justify-center rounded-full bg-violet-600 text-white shadow-lg ring-4 ring-violet-200 hover:bg-violet-500"
+        title="다음 단계로 내려가기"
+        aria-label="아래로 스크롤"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </main>
   );
 }
