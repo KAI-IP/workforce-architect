@@ -44,7 +44,13 @@ lib/knowledge/
 
 시드를 MISO 앱의 **지식**에 첨부해 아키텍트가 RAG 로 참조하게 합니다. 시드가 커져 query 주입이 부담될 때의 정공법입니다.
 
-1. **업로드 파일 준비**: 현재 시드는 JSON 입니다. MISO/Dify 계열 지식은 마크다운/텍스트 청킹이 잘 됩니다. JSON 그대로 올려도 되고, 직무별 `<slug>.json` + `labor-cost-table.json` + 프로세스맵 JSON 을 각각 문서로 추가하세요. (대량일 때는 별도 flatten 스크립트로 마크다운 변환 권장)
+1. **업로드 파일 준비**: MISO/Dify 계열 지식은 마크다운/텍스트 청킹이 잘 됩니다. flatten 스크립트로 시드를 마크다운으로 변환하세요:
+
+   ```bash
+   npx tsx lib/knowledge/scripts/build-rag-corpus.ts
+   ```
+
+   → `lib/knowledge/miso-rag/` 에 `corpus.md`(전체 1파일) + `ncs-<slug>.md`·`labor-cost.md`·`process-<slug>.md` 생성. 원샷이면 `corpus.md` 하나만, 문서 단위 관리면 개별 `.md` 를 올리세요. (시드/직무를 추가·갱신하면 스크립트만 다시 실행하면 됩니다)
 2. **MISO 콘솔 → 해당 챗 에이전트 앱 → 지식(Knowledge) → 문서 추가**로 업로드, 인덱싱/임베딩 완료 확인.
 3. **앱 시스템 프롬프트**에 아래 지침을 추가해 지식을 강제 참조:
 

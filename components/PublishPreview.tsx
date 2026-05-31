@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import type { OrgDesign, Role } from "@/lib/types";
+import type { Brief, OrgDesign, Role } from "@/lib/types";
+import type { Timeline } from "@/lib/timeline";
 import { LANE_META, LANE_ORDER, isHuman } from "@/lib/lanes";
-import { computeBalance, roleCost } from "@/lib/cost";
+import { computeBalance, roleProjectCost, effectiveWindow } from "@/lib/cost";
+
+const WINDOW_KO: Record<string, string> = { both: "준비+운영", operation: "운영만", prep: "준비만" };
 
 function fmt(manwon: number): string {
   if (!Number.isFinite(manwon)) return "-";
@@ -25,13 +28,16 @@ interface Mission {
 // §5.6 발행 목 → 북극성③: 조직 실행계획 문서 (사업 시작 기초 문서)
 export default function PublishPreview({
   design,
+  timeline,
   onClose,
 }: {
   design: OrgDesign;
+  timeline: Timeline;
   onClose: () => void;
 }) {
-  const b = computeBalance(design);
+  const b = computeBalance(design, timeline);
   const p = design.project;
+  const short = b.projectType === "SHORTTERM";
   const [missions, setMissions] = useState<Record<string, Mission>>({});
   const [generating, setGenerating] = useState(false);
   const allDone = design.roles.every((r) => missions[r.id]);
@@ -82,7 +88,10 @@ export default function PublishPreview({
 
         <div className="mb-5 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
           <Meta label="타겟 고객" value={p.targetCustomer} />
-          <Meta label="기간" value={`${p.durationMonths}개월`} />
+          <Meta
+            label="기간"
+            value={short ? `준비 ${timeline.prepWeeks}주 + 운영 ${timeline.opWeeks}주` : `${p.durationMonths}개월`}
+          />
           <Meta label="목표매출" value={`${fmt(p.targetRevenue)}/년`} />
           <Meta label="인건비 / 예산" value={`${fmt(b.total)} / ${fmt(b.budget)}`} danger={b.over > 0} />
         </div>
@@ -115,7 +124,14 @@ export default function PublishPreview({
               </h2>
               <div className="space-y-2">
                 {roles.map((r) => (
-                  <RoleRow key={r.id} role={r} mission={missions[r.id]} />
+                  <RoleRow
+                    key={r.id}
+                    role={r}
+                    project={p}
+                    timeline={timeline}
+                    short={short}
+                    mission={missions[r.id]}
+                  />
                 ))}
               </div>
             </div>
@@ -147,9 +163,21 @@ function Meta({ label, value, danger }: { label: string; value: string; danger?:
   );
 }
 
-function RoleRow({ role, mission }: { role: Role; mission?: Mission }) {
+function RoleRow({
+  role,
+  project,
+  timeline,
+  short,
+  mission,
+}: {
+  role: Role;
+  project: Brief;
+  timeline: Timeline;
+  short: boolean;
+  mission?: Mission;
+}) {
   const human = isHuman(role.lane);
-  const cost = roleCost(role);
+  const cost = roleProjectCost(role, project, timeline);
   return (
     <div className="rounded-lg border border-slate-200 p-3">
       <div className="flex items-start justify-between gap-3">
@@ -157,14 +185,17 @@ function RoleRow({ role, mission }: { role: Role; mission?: Mission }) {
           <p className="text-sm font-semibold text-slate-900">{role.title}</p>
           <p className="mt-0.5 text-xs leading-relaxed text-slate-500">{role.rationale}</p>
         </div>
-        <span className="shrink-0 text-xs font-semibold text-slate-700">≈ {fmt(cost)}/년</span>
+        <span className="shrink-0 text-xs font-semibold text-slate-700">
+          ≈ {fmt(cost)}
+          {short ? "" : "/년"}
+        </span>
       </div>
 
       {human && (
         <div className="mt-2 grid grid-cols-2 gap-2 rounded-md bg-slate-50 p-2 text-[11px] sm:grid-cols-4">
           <KV k="직무" v={role.jobCategoryQuery ?? "-"} />
           <KV k="시니어리티" v={role.seniority ?? "-"} />
-          <KV k="근무형태" v={role.workType ?? "-"} />
+          <KV k={short ? "고용구간" : "근무형태"} v={short ? WINDOW_KO[effectiveWindow(role)] : role.workType ?? "-"} />
           <KV k="예상연봉" v={role.estimatedAnnualSalary ? `${role.estimatedAnnualSalary.toLocaleString()}만` : "-"} />
         </div>
       )}

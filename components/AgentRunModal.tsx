@@ -55,14 +55,14 @@ export default function AgentRunModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4"
       onClick={(e) => {
         e.stopPropagation();
         onClose();
       }}
     >
       <div
-        className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#0e1424] p-5 shadow-2xl"
+        className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-start justify-between">
@@ -70,35 +70,35 @@ export default function AgentRunModal({
             <span className="text-xs font-semibold" style={{ color: meta.color }}>
               {isAi ? "AI 직원 실행" : "역할 미션 도출"} · {meta.label}
             </span>
-            <h3 className="text-lg font-bold text-white/90">{role.title}</h3>
+            <h3 className="text-lg font-bold text-slate-900">{role.title}</h3>
           </div>
           <button
             onClick={(e) => {
               e.stopPropagation();
               onClose();
             }}
-            className="rounded p-1 text-white/40 hover:text-white/80"
+            className="rounded p-1 text-slate-400 hover:text-slate-700"
           >
             ✕
           </button>
         </div>
 
         {loading ? (
-          <p className="py-8 text-center text-xs text-white/40">
+          <p className="py-8 text-center text-xs text-slate-400">
             {isAi ? "MISO 직원이 일하는 중…" : "미션 도출 중…"}
           </p>
         ) : (
           <div className="space-y-4">
             {m.objective && (
               <div>
-                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-white/40">목표</h4>
-                <p className="mt-1 text-sm text-white/85">{m.objective}</p>
+                <h4 className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">목표</h4>
+                <p className="mt-1 text-sm text-slate-800">{m.objective}</p>
               </div>
             )}
 
             {!!m.tasks?.length && (
               <Section title="주차별 태스크" color={meta.color}>
-                <ol className="list-decimal space-y-1 pl-4 text-xs text-white/70">
+                <ol className="list-decimal space-y-1 pl-4 text-xs text-slate-600">
                   {m.tasks.map((t, i) => (
                     <li key={i}>{t}</li>
                   ))}
@@ -109,7 +109,7 @@ export default function AgentRunModal({
             <div className="grid grid-cols-2 gap-3">
               {!!m.deliverables?.length && (
                 <Section title="산출물" color={meta.color}>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-slate-600">
                     {m.deliverables.map((d, i) => (
                       <li key={i}>· {d}</li>
                     ))}
@@ -118,7 +118,7 @@ export default function AgentRunModal({
               )}
               {!!m.kpi?.length && (
                 <Section title="KPI" color={meta.color}>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-slate-600">
                     {m.kpi.map((k, i) => (
                       <li key={i}>· {k}</li>
                     ))}
@@ -129,18 +129,22 @@ export default function AgentRunModal({
 
             {m.sampleOutput && (
               <Section title={isAi ? "산출물 샘플 (지금 생성)" : "당장 만들 수 있는 산출물"} color={meta.color}>
-                <p className="text-xs leading-relaxed text-white/75">{m.sampleOutput}</p>
+                <p className="text-xs leading-relaxed text-slate-700">{m.sampleOutput}</p>
               </Section>
             )}
 
-            {/* 실측/비용 + 출처 */}
-            <div className="flex items-center justify-between border-t border-white/10 pt-3 text-[11px]">
-              <span className="text-white/40">
-                출처: {res?.source === "workflow" ? "MISO 워크플로우" : res?.source === "architect" ? "MISO 아키텍트" : "목"}
+            <div className="flex items-center justify-between border-t border-slate-200 pt-3 text-[11px]">
+              <span className="text-slate-400">
+                출처:{" "}
+                {res?.source === "workflow"
+                  ? "MISO 워크플로우"
+                  : res?.source === "architect"
+                    ? "MISO 아키텍트"
+                    : "목"}
                 {res?.degraded ? " (degraded)" : ""}
               </span>
               {usage && (usage.total_tokens || usage.total_price) && (
-                <span className="text-white/60">
+                <span className="text-slate-600">
                   {usage.total_tokens ? `${Number(usage.total_tokens).toLocaleString()} tok` : ""}
                   {usage.total_price ? ` · ${usage.total_price}` : ""}
                 </span>
@@ -155,7 +159,7 @@ export default function AgentRunModal({
 
 function Section({ title, color, children }: { title: string; color: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
       <h4 className="mb-1.5 text-[11px] font-semibold" style={{ color }}>
         {title}
       </h4>

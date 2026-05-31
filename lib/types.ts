@@ -2,14 +2,23 @@
 export type Lane = 'AI' | 'EDGE' | 'FIELD';
 export type Seniority = 'BEGINNER' | 'JUNIOR' | 'MIDLEVEL' | 'SENIOR' | 'EXECUTIVE';
 
+// 장기 비즈니스(연봉) vs 단기 프로젝트(준비+운영, 주 단위)
+export type ProjectType = 'LONGTERM' | 'SHORTTERM';
+// 역할 고용 구간: 준비기간 / 운영기간 / 둘 다
+export type EmployWindow = 'prep' | 'operation' | 'both';
+
 export interface Brief {
   title: string;
   summary: string;
   targetCustomer: string;
   targetRevenue: number; // 만원/년
-  durationMonths: number;
-  laborBudget: number; // 만원/년 (인건비 예산)
+  durationMonths: number; // 소수 허용(0.5 = 약 2주)
+  laborBudget: number; // 장기: 만원/년 · 단기: 만원/프로젝트 총액
   hasOffline: boolean;
+  // 시간 모델 (rank1)
+  projectType?: ProjectType; // 자동분류 결과(저장용)
+  projectTypeOverride?: ProjectType; // 수동 override(있으면 우선)
+  opWeeks?: number; // 단기 운영기간(주)
 }
 
 export interface Role {
@@ -27,6 +36,13 @@ export interface Role {
   // AI 전용
   misoCapability?: string; // 어떤 MISO 앱/워크플로우
   estimatedMonthlyAiCost?: number; // 만원
+  // 시간 모델 (rank1): 고용 구간 (EDGE=both, FIELD=operation, AI=both 기본)
+  employWindow?: EmployWindow;
+  headcount?: number; // rank3 인원 제안 (기본 1)
+  // 조직 대시보드 (rank4): 보고/감독 관계 + 업무 주기
+  reportsTo?: string; // 보고 대상 role id
+  supervisedBy?: string; // 감독 대상 role id (AI/FIELD는 인간 감독자 필수)
+  cadence?: { daily?: string; weekly?: string; monthly?: string };
 }
 
 export interface OrgDesign {
