@@ -39,12 +39,24 @@ export function aiAnnual(monthlyAiCost: number): number {
   return Math.round(monthlyAiCost * 12);
 }
 
+const FIELD_SANITY_CEIL = 12000; // 1.2억/년/인 초과 fieldCost = 비정상(모델 환각)으로 간주
+
+// FIELD 1인 연비용 — 비정상 fieldCost 방어 후 연봉 기반으로 폴백
+function fieldUnitCost(role: Role): number {
+  const sen = role.seniority ?? "MIDLEVEL";
+  const bySalary = role.estimatedAnnualSalary ? Math.round(role.estimatedAnnualSalary * SENIORITY_MULT[sen]) : 0;
+  const byField = role.fieldCost ? fieldAnnual(role.fieldCost) : 0;
+  if (byField > 0 && byField <= FIELD_SANITY_CEIL) return byField; // 합리적 현장비용
+  if (bySalary > 0) return bySalary; // 비정상 fieldCost → 연봉 환산
+  return Math.min(byField || 3000, FIELD_SANITY_CEIL); // 최후 캡
+}
+
 // 역할 1개의 연 비용(만원) — 레인별 분기. headcount 반영.
 export function roleCost(role: Role): number {
   const n = role.headcount && role.headcount > 0 ? role.headcount : 1;
   let unit: number;
   if (role.lane === "AI") unit = aiAnnual(role.estimatedMonthlyAiCost ?? 0);
-  else if (role.lane === "FIELD" && role.fieldCost) unit = fieldAnnual(role.fieldCost);
+  else if (role.lane === "FIELD") unit = fieldUnitCost(role);
   else unit = edgeAnnual(role.estimatedAnnualSalary ?? 0, role.seniority ?? "MIDLEVEL");
   return unit * n;
 }
@@ -92,7 +104,7 @@ export function computeBalance(design: OrgDesign, t?: Timeline): Balance {
   for (const r of design.roles) {
     const c = projectType === "SHORTTERM" && t ? roleProjectCost(r, p, t) : roleCost(r);
     if (r.lane === "AI") ai += c;
-    else if (r.lane === "FIELD" && r.fieldCost) field += c;
+    else if (r.lane === "FIELD") field += c;
     else edge += c;
   }
   const total = ai + edge + field;

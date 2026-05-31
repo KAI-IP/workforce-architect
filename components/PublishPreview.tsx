@@ -5,6 +5,8 @@ import type { Brief, OrgDesign, Role } from "@/lib/types";
 import type { Timeline } from "@/lib/timeline";
 import { LANE_META, LANE_ORDER, isHuman } from "@/lib/lanes";
 import { computeBalance, roleProjectCost, effectiveWindow } from "@/lib/cost";
+import { buildTimeframe } from "@/lib/timeframe";
+import { toSkillMd } from "@/lib/skillmd";
 
 const WINDOW_KO: Record<string, string> = { both: "준비+운영", operation: "운영만", prep: "준비만" };
 
@@ -38,6 +40,18 @@ export default function PublishPreview({
   const b = computeBalance(design, timeline);
   const p = design.project;
   const short = b.projectType === "SHORTTERM";
+  const tf = buildTimeframe(design);
+
+  function downloadSkillMd() {
+    const md = toSkillMd(design, missions);
+    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${design.project.title.replace(/\s+/g, "_")}_SKILL.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
   const [missions, setMissions] = useState<Record<string, Mission>>({});
   const [generating, setGenerating] = useState(false);
   const allDone = design.roles.every((r) => missions[r.id]);
@@ -138,16 +152,44 @@ export default function PublishPreview({
           );
         })}
 
+        {/* 타임프레임 — 당사자별 개월 마일스톤 (PDF 포함) */}
+        <div className="mb-5">
+          <h2 className="mb-2 text-sm font-bold text-slate-800">타임프레임 — {tf.monthCount}개월 시행계획</h2>
+          <div className="space-y-1.5">
+            {tf.rows.map((r) => (
+              <div key={r.roleId} className="rounded-lg border border-slate-200 p-2">
+                <p className="text-xs font-semibold text-slate-700">{r.title}</p>
+                <div className="mt-1 grid gap-1 text-[10px] text-slate-500 sm:grid-cols-2 lg:grid-cols-3">
+                  {r.months.map((m, i) => (
+                    <span key={i}>
+                      <b className="text-slate-600">{i + 1}M</b> {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between print:hidden">
           <p className="text-xs text-slate-400">
-            ※ 실제 구인 발행(로켓펀치 POST/OAuth)은 데모 범위 밖 — 본 문서는 사업 시작 기초 문서입니다.
+            ※ 실제 구인 발행은 데모 범위 밖 — 본 문서는 사업 시작 기초 문서입니다.
           </p>
-          <button
-            onClick={() => window.print()}
-            className="rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-700"
-          >
-            인쇄 / PDF 저장
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={downloadSkillMd}
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+              title="Tower Standalone(Apache-2.0) 호환 SKILL.md"
+            >
+              SKILL.md 내보내기
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-700"
+            >
+              인쇄 / PDF 저장
+            </button>
+          </div>
         </div>
       </div>
     </div>

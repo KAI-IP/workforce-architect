@@ -9,6 +9,7 @@ import PublishPreview from "@/components/PublishPreview";
 import NLBriefInput from "@/components/NLBriefInput";
 import DeckZone from "@/components/DeckZone";
 import WorkflowDeckDashboard from "@/components/WorkflowDeckDashboard";
+import TimeframeDashboard from "@/components/TimeframeDashboard";
 import design from "@/lib/mocks/design.json";
 import { computeBalance } from "@/lib/cost";
 import { estimateTimeline, effectiveProjectType } from "@/lib/timeline";
@@ -109,8 +110,15 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deck, orgDesign]);
 
-  async function refine(instruction: string) {
+  async function refine(userInstruction: string) {
     setCompressing(true);
+    const current = orgDesign.roles
+      .map((r) => `${r.title}[${r.lane}${r.jobCategoryQuery ? "/직군:" + r.jobCategoryQuery : ""}]`)
+      .join(", ");
+    const instruction =
+      `[현재 설계 역할] ${current}\n[수정 지시] ${userInstruction}\n` +
+      `위 수정 지시를 반드시 반영해 조직을 처음부터 재설계하라. 특히 직군(jobCategoryQuery)이 사업 본질과 ` +
+      `맞지 않으면 지시대로 정확히 교체하라(틀린 직군을 유지하지 마라). 지침의 JSON 스키마만 출력.`;
     try {
       const res = await fetch("/api/architect", {
         method: "POST",
@@ -180,9 +188,16 @@ export default function Home() {
         <PublishPreview design={orgDesign} timeline={timeline} onClose={() => setPublishOpen(false)} />
       )}
 
-      <div className="grid gap-8 lg:grid-cols-[360px_1fr]">
-        <section>
-          <h2 className="mb-3 text-sm font-semibold text-slate-700">사업 브리프</h2>
+      {/* STEP 1 — 사업 브리프 (상하 flow) */}
+      <section className="mx-auto max-w-3xl">
+        <div className="mb-1 flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">1</span>
+          <h2 className="text-sm font-semibold text-slate-700">사업 브리프</h2>
+        </div>
+        <p className="mb-3 text-xs text-slate-400">
+          자연어로 사업을 설명하면 AI가 폼을 채웁니다. 기간으로 장기 비즈니스/단기 프로젝트를 자동 분류합니다.
+        </p>
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
           <NLBriefInput onParsed={handleParsed} />
           <BriefForm key={formKey} initial={formInitial} onSubmit={handleDesign} loading={loading} />
           {designed && (
@@ -194,33 +209,44 @@ export default function Home() {
               )}
             </p>
           )}
-        </section>
+        </div>
+      </section>
 
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-slate-700">조직 캔버스</h2>
-            <span className="text-xs text-slate-400">
-              {loading
-                ? "분석 중…"
-                : `${orgDesign.roles.length}개 역할 · ${projectType === "SHORTTERM" ? "단기 프로젝트" : "장기 비즈니스"}`}
-            </span>
-          </div>
-          <OrgCanvas
-            design={orgDesign}
-            timeline={timeline}
-            loading={loading}
-            onRoleUpdate={updateRole}
-            onAddToDeck={addToDeck}
-          />
-          <p className="pt-1 text-xs text-slate-400">
-            인간 카드 클릭 → 페르소나에서 [덱에 추가]. “시장 N건”은 로켓펀치 공급량 (
-            <span className="text-slate-500">*</span> = API 미응답 시 목).
-          </p>
-        </section>
-      </div>
+      <FlowArrow />
 
-      {/* rank3: 운영 덱 */}
-      <section className="mt-8">
+      {/* STEP 2 — 조직 캔버스 */}
+      <section>
+        <div className="mb-1 flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">2</span>
+          <h2 className="text-sm font-semibold text-slate-700">조직 캔버스</h2>
+          <span className="ml-auto text-xs text-slate-400">
+            {loading ? "분석 중…" : `${orgDesign.roles.length}개 역할 · ${projectType === "SHORTTERM" ? "단기 프로젝트" : "장기 비즈니스"}`}
+          </span>
+        </div>
+        <p className="mb-3 max-w-3xl text-xs leading-relaxed text-slate-500">
+          AI-NATIVE 프로젝트 수행을 위하여 주체별로 다음과 같은 업무를 수행할 수 있습니다. 각 직군의 후보자들을
+          제안드리며, 적합한 인원을 Deck으로 추가하여 사업 운영 방향을 시뮬레이션 하세요.
+        </p>
+        <OrgCanvas
+          design={orgDesign}
+          timeline={timeline}
+          loading={loading}
+          onRoleUpdate={updateRole}
+          onAddToDeck={addToDeck}
+        />
+      </section>
+
+      <FlowArrow />
+
+      {/* STEP 3 — 운영 덱 */}
+      <section>
+        <div className="mb-1 flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">3</span>
+          <h2 className="text-sm font-semibold text-slate-700">운영 덱 시뮬레이션</h2>
+        </div>
+        <p className="mb-3 text-xs text-slate-400">
+          후보를 덱에 배치하면 AI가 이 조합으로 사업이 운영 가능한지(인원·경력·역량) 평가합니다.
+        </p>
         <DeckZone
           deck={deck}
           roles={orgDesign.roles}
@@ -233,15 +259,28 @@ export default function Home() {
         />
       </section>
 
-      {/* P7 밸런스 + P8 순환 수정 */}
-      <section className="mt-8 space-y-4">
+      <FlowArrow />
+
+      {/* STEP 4 — 밸런스 + 순환 수정 */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">4</span>
+          <h2 className="text-sm font-semibold text-slate-700">비용 검토 · 순환 수정</h2>
+        </div>
         <BalanceSheet design={orgDesign} timeline={timeline} onCompress={handleCompress} compressing={compressing} />
         <RefinePanel onRefine={refine} busy={compressing} />
       </section>
 
-      {/* rank4: 워크플로우 덱 대시보드 */}
-      <section className="mt-8">
+      <FlowArrow />
+
+      {/* STEP 5 — 워크플로우 덱: 조직 + 타임프레임 대시보드 */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">5</span>
+          <h2 className="text-sm font-semibold text-slate-700">워크플로우 덱</h2>
+        </div>
         <WorkflowDeckDashboard design={orgDesign} onOpenPublish={() => setPublishOpen(true)} />
+        <TimeframeDashboard design={orgDesign} />
       </section>
 
       <footer className="mt-10 border-t border-slate-200 pt-4 text-[11px] leading-relaxed text-slate-400">
@@ -249,5 +288,15 @@ export default function Home() {
         AI/미션은 MISO로 실제 실행됩니다. 외부 API 미응답 시 목 데이터로 graceful fallback.
       </footer>
     </main>
+  );
+}
+
+function FlowArrow() {
+  return (
+    <div className="my-4 flex justify-center text-slate-300" aria-hidden>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
   );
 }
