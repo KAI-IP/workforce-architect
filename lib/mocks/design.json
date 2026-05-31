@@ -10,6 +10,23 @@
   },
   "roles": [
     {
+      "id": "EDGE-004",
+      "title": "운영 총괄 PM",
+      "lane": "EDGE",
+      "rationale": "전체 구독 프로세스 모니터링, 고객 만족도 최종 판단, 신규 위험 대응. 맥락 판단 권한 필요",
+      "jobCategoryQuery": "프로젝트매니저",
+      "seniority": "SENIOR",
+      "workType": "HYBRID",
+      "estimatedAnnualSalary": 5000,
+      "reportsTo": null,
+      "supervisedBy": null,
+      "cadence": {
+        "daily": ["운영 대시보드 점검", "이슈 트리아지"],
+        "weekly": ["부서별 진행 리뷰", "KPI 점검"],
+        "monthly": ["월간 성과 보고", "전략 조정"]
+      }
+    },
+    {
       "id": "EDGE-001",
       "title": "반려동물 영양·의료 감시자",
       "lane": "EDGE",
@@ -17,7 +34,14 @@
       "jobCategoryQuery": "수의사",
       "seniority": "SENIOR",
       "workType": "HYBRID",
-      "estimatedAnnualSalary": 5000
+      "estimatedAnnualSalary": 5000,
+      "reportsTo": "EDGE-004",
+      "supervisedBy": null,
+      "cadence": {
+        "daily": ["신규 레시피 검수"],
+        "weekly": ["처방 가이드 업데이트"],
+        "monthly": ["영양 클레임 검토"]
+      }
     },
     {
       "id": "EDGE-002",
@@ -27,7 +51,30 @@
       "jobCategoryQuery": "고객상담사",
       "seniority": "MIDLEVEL",
       "workType": "HYBRID",
-      "estimatedAnnualSalary": 3000
+      "estimatedAnnualSalary": 3000,
+      "reportsTo": "EDGE-004",
+      "supervisedBy": null,
+      "cadence": {
+        "daily": ["고객 상담 응대", "추천 결과 검수"],
+        "weekly": ["VOC 정리"],
+        "monthly": ["상담 품질 리포트"]
+      }
+    },
+    {
+      "id": "EDGE-003",
+      "title": "법무·규정 담당자",
+      "lane": "EDGE",
+      "rationale": "구독 약관, 환불 정책, 개인정보·건강 데이터 법적 관리. 위임 불가 최종 가드레일",
+      "jobCategoryQuery": "법무담당자",
+      "seniority": "MIDLEVEL",
+      "workType": "HYBRID",
+      "estimatedAnnualSalary": 2800,
+      "reportsTo": "EDGE-004",
+      "supervisedBy": null,
+      "cadence": {
+        "weekly": ["약관·정책 점검"],
+        "monthly": ["개인정보 컴플라이언스 감사"]
+      }
     },
     {
       "id": "AI-001",
@@ -35,15 +82,44 @@
       "lane": "AI",
       "rationale": "고객 프로필, 구매패턴 분석. 맞춤 추천 알고리즘, 이탈 예측, 구독 자동갱신 관리 자동화",
       "misoCapability": "추천 시스템, 이탈 예측 모델, 데이터 파이프라인, 자동화 워크플로우",
-      "estimatedMonthlyAiCost": 800
+      "estimatedMonthlyAiCost": 800,
+      "reportsTo": "EDGE-004",
+      "supervisedBy": "EDGE-002",
+      "cadence": {
+        "daily": ["추천 배치 실행", "이탈 스코어 갱신"],
+        "weekly": ["A/B 결과 리포트"],
+        "monthly": ["모델 재학습·정확도 점검"]
+      }
     },
     {
       "id": "AI-002",
       "title": "마케팅·콘텐츠 자동화 AI",
       "lane": "AI",
-      "rationale": "이메일 캠프인, SNS 콘텐츠 생성, 세그먼트별 맞춤 메시지. 반복 업무 자동화",
+      "rationale": "이메일 캠페인, SNS 콘텐츠 생성, 세그먼트별 맞춤 메시지. 반복 업무 자동화",
       "misoCapability": "자연어 생성, 이메일 자동화, 콘텐츠 스케줄링, A/B 테스트",
-      "estimatedMonthlyAiCost": 500
+      "estimatedMonthlyAiCost": 500,
+      "reportsTo": "EDGE-002",
+      "supervisedBy": "EDGE-002",
+      "cadence": {
+        "daily": ["콘텐츠 생성·예약"],
+        "weekly": ["캠페인 성과 집계"],
+        "monthly": ["채널별 ROI 리포트"]
+      }
+    },
+    {
+      "id": "AI-003",
+      "title": "공급망·재고 최적화 AI",
+      "lane": "AI",
+      "rationale": "구독 수요 예측, 제조 발주 최적화, 창고 재고 자동 관리. 반복 결정 자동화",
+      "misoCapability": "수요예측, 재고최적화, 발주 자동화",
+      "estimatedMonthlyAiCost": 400,
+      "reportsTo": "EDGE-004",
+      "supervisedBy": "EDGE-001",
+      "cadence": {
+        "daily": ["재고 모니터링", "발주 추천"],
+        "weekly": ["수요 예측 갱신"],
+        "monthly": ["공급사 성과 분석"]
+      }
     },
     {
       "id": "FIELD-001",
@@ -54,39 +130,14 @@
       "seniority": "BEGINNER",
       "workType": "ONSITE",
       "estimatedAnnualSalary": 2400,
-      "fieldCost": {
-        "type": "per_visit",
-        "unit": 50,
-        "volume": 120
+      "fieldCost": { "type": "per_visit", "unit": 5, "volume": 120 },
+      "reportsTo": "EDGE-004",
+      "supervisedBy": "EDGE-004",
+      "cadence": {
+        "daily": ["방문 배송·수령", "현장 반응 수집"],
+        "weekly": ["배송 이슈 보고"],
+        "monthly": ["팝업 이벤트 지원"]
       }
-    },
-    {
-      "id": "AI-003",
-      "title": "공급망·재고 최적화 AI",
-      "lane": "AI",
-      "rationale": "구독 수요 예측, 제조 발주 최적화, 창고 재고 자동 관리. 반복 결정 자동화",
-      "misoCapability": "수요예측, 재고최적화, 발주 자동화",
-      "estimatedMonthlyAiCost": 400
-    },
-    {
-      "id": "EDGE-003",
-      "title": "법무·규정 담당자",
-      "lane": "EDGE",
-      "rationale": "구독 약관, 환불 정책, 개인정보·건강 데이터 법적 관리. 위임 불가 최종 가드레일",
-      "jobCategoryQuery": "법무담당자",
-      "seniority": "MIDLEVEL",
-      "workType": "HYBRID",
-      "estimatedAnnualSalary": 2800
-    },
-    {
-      "id": "EDGE-004",
-      "title": "운영 총괄 PM",
-      "lane": "EDGE",
-      "rationale": "전체 구독 프로세스 모니터링, 고객 만족도 최종 판단, 신규 위험 대응. 맥락 판단 권한 필요",
-      "jobCategoryQuery": "프로젝트매니저",
-      "seniority": "SENIOR",
-      "workType": "HYBRID",
-      "estimatedAnnualSalary": 5000
     }
   ]
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { OrgDesign, Role } from "@/lib/types";
+import type { OrgDesign, Persona, Role } from "@/lib/types";
 import type { Timeline } from "@/lib/timeline";
 import { LANE_META, LANE_ORDER } from "@/lib/lanes";
 import RoleCard from "./RoleCard";
@@ -11,11 +11,13 @@ export default function OrgCanvas({
   timeline,
   loading = false,
   onRoleUpdate,
+  onAddToDeck,
 }: {
   design: OrgDesign;
   timeline: Timeline;
   loading?: boolean;
   onRoleUpdate: (roleId: string, patch: Partial<Role>) => void;
+  onAddToDeck: (roleId: string, persona: Persona) => void;
 }) {
   return (
     <div className="grid gap-4 md:grid-cols-3">
@@ -43,6 +45,7 @@ export default function OrgCanvas({
                   project={design.project}
                   timeline={timeline}
                   onRoleUpdate={onRoleUpdate}
+                  onAddToDeck={onAddToDeck}
                 />
               ))}
               {!roles.length && (

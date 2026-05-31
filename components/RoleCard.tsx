@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Brief, Role } from "@/lib/types";
 import type { Timeline } from "@/lib/timeline";
+import type { Persona } from "@/lib/types";
 import { LANE_META, isHuman } from "@/lib/lanes";
 import { roleProjectCost, effectiveWindow } from "@/lib/cost";
 import { effectiveProjectType } from "@/lib/timeline";
@@ -17,11 +18,13 @@ export default function RoleCard({
   project,
   timeline,
   onRoleUpdate,
+  onAddToDeck,
 }: {
   role: Role;
   project: Brief;
   timeline: Timeline;
   onRoleUpdate: (roleId: string, patch: Partial<Role>) => void;
+  onAddToDeck: (roleId: string, persona: Persona) => void;
 }) {
   const meta = LANE_META[role.lane];
   const human = isHuman(role.lane);
@@ -67,6 +70,7 @@ export default function RoleCard({
           timeline={timeline}
           onClose={() => setOpen(false)}
           onRoleUpdate={onRoleUpdate}
+          onAddToDeck={onAddToDeck}
         />
       )}
       {runOpen && <AgentRunModal role={role} project={project} onClose={() => setRunOpen(false)} />}

@@ -9,6 +9,7 @@ export interface MisoChatArgs {
   query: string;
   conversationId?: string | null;
   user?: string;
+  timeoutMs?: number; // 응답 지연/행 방지 (기본 60s)
 }
 
 export interface MisoChatResponse {
@@ -20,27 +21,34 @@ export interface MisoChatResponse {
 // MISO /chat (blocking). 스펙 §1/§6: mode:"blocking" 으로 받고 answer 를 JSON 파싱.
 export async function misoChat(args: MisoChatArgs): Promise<MisoChatResponse> {
   if (!BASE) throw new Error("MISO_BASE_URL not set");
-  const res = await fetch(`${BASE}/chat`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${args.key}`,
-    },
-    body: JSON.stringify({
-      inputs: args.inputs,
-      query: args.query,
-      // MISO/Dify 계열 호환을 위해 둘 다 전송
-      mode: "blocking",
-      response_mode: "blocking",
-      conversation_id: args.conversationId ?? undefined,
-      user: args.user ?? "workforce-architect",
-    }),
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error(`MISO ${res.status}: ${await res.text().catch(() => "")}`);
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), args.timeoutMs ?? 60000);
+  try {
+    const res = await fetch(`${BASE}/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${args.key}`,
+      },
+      body: JSON.stringify({
+        inputs: args.inputs,
+        query: args.query,
+        // MISO/Dify 계열 호환을 위해 둘 다 전송
+        mode: "blocking",
+        response_mode: "blocking",
+        conversation_id: args.conversationId ?? undefined,
+        user: args.user ?? "workforce-architect",
+      }),
+      cache: "no-store",
+      signal: ctrl.signal,
+    });
+    if (!res.ok) {
+      throw new Error(`MISO ${res.status}: ${await res.text().catch(() => "")}`);
+    }
+    return (await res.json()) as MisoChatResponse;
+  } finally {
+    clearTimeout(timer);
   }
-  return (await res.json()) as MisoChatResponse;
 }
 
 // MISO 워크플로우 (/workflows/run) — P9 에서 사용. 여기 미리 정의.

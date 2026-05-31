@@ -28,12 +28,14 @@ export default function PersonaPopover({
   timeline,
   onClose,
   onRoleUpdate,
+  onAddToDeck,
 }: {
   role: Role;
   project: Brief;
   timeline: Timeline;
   onClose: () => void;
   onRoleUpdate: (roleId: string, patch: Partial<Role>) => void;
+  onAddToDeck: (roleId: string, persona: Persona) => void;
 }) {
   const meta = LANE_META[role.lane];
   const [data, setData] = useState<PersonaResult | null>(null);
@@ -182,6 +184,16 @@ export default function PersonaPopover({
                   {p.domain} · 선호 {p.workPref}
                 </p>
                 <p className="mt-1 text-[11px] leading-relaxed text-slate-500">{p.reason}</p>
+                <button
+                  onClick={() => {
+                    onAddToDeck(role.id, p);
+                    onClose();
+                  }}
+                  className="mt-2 w-full rounded-md py-1.5 text-[11px] font-semibold text-white"
+                  style={{ background: meta.color }}
+                >
+                  이 카드로 덱에 추가 +
+                </button>
               </div>
             ))}
           </div>

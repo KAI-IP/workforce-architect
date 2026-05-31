@@ -40,9 +40,36 @@ export interface Role {
   employWindow?: EmployWindow;
   headcount?: number; // rank3 인원 제안 (기본 1)
   // 조직 대시보드 (rank4): 보고/감독 관계 + 업무 주기
-  reportsTo?: string; // 보고 대상 role id
-  supervisedBy?: string; // 감독 대상 role id (AI/FIELD는 인간 감독자 필수)
-  cadence?: { daily?: string; weekly?: string; monthly?: string };
+  reportsTo?: string | null; // 보고자 role id (최상위는 null)
+  supervisedBy?: string | null; // 감독자 role id (AI/FIELD는 인간 감독자 필수)
+  cadence?: Cadence;
+}
+
+export interface Cadence {
+  daily?: string[];
+  weekly?: string[];
+  monthly?: string[];
+}
+
+// rank3 카드덱: 역할 슬롯 + 선택된 페르소나 1장
+export interface DeckCardData {
+  instanceId: string;
+  roleId: string;
+  persona: Persona;
+}
+
+export type SuggestionKind = "ADD_HEADCOUNT" | "RAISE_SENIORITY" | "ADD_ROLE" | "COVER_BY_AI";
+
+export interface TeamReview {
+  adequacy: "OK" | "CAUTION" | "GAP";
+  comment: string;
+  suggestions: {
+    roleId: string;
+    kind: SuggestionKind;
+    target?: number | Seniority;
+    reason: string;
+  }[];
+  missingCapabilities: string[];
 }
 
 export interface OrgDesign {
