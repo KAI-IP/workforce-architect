@@ -150,6 +150,19 @@ export default function AgentRunModal({
                 </span>
               )}
             </div>
+
+            {/* AI 역할: 이 미션을 실제 MISO 에이전트로 만들기 */}
+            {isAi && (
+              <a
+                href="https://console.miso.gs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold text-white"
+                style={{ background: meta.color }}
+              >
+                ⚙️ 이 직원을 MISO 에이전트로 생성하기 ↗
+              </a>
+            )}
           </div>
         )}
       </div>

@@ -292,9 +292,6 @@ export default function Home() {
           onRoleUpdate={updateRole}
           onAddToDeck={addToDeck}
         />
-        <div className="mt-4">
-          <NextSteps design={orgDesign} timeline={timeline} />
-        </div>
       </section>
 
       <FlowArrow />
@@ -344,9 +341,23 @@ export default function Home() {
         <TimeframeDashboard design={orgDesign} />
       </section>
 
+      <FlowArrow />
+
+      {/* STEP 6 — 다음 단계 사업 추진 연결 (맨 마지막) */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-2">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">6</span>
+          <h2 className="text-sm font-semibold text-slate-700">다음 단계 — 사업 추진 연결</h2>
+        </div>
+        <NextSteps design={orgDesign} timeline={timeline} />
+      </section>
+
       <footer className="mt-10 border-t border-slate-200 pt-4 text-[11px] leading-relaxed text-slate-400">
-        비용·연봉은 NCS·공개 노동통계 기반 PoC 가정값(재무자문 아님). 인간 역할은 로켓펀치 공급량으로 검증하며,
-        AI/미션은 MISO로 실제 실행됩니다. 외부 API 미응답 시 목 데이터로 graceful fallback.
+        <p>
+          비용·연봉은 NCS·공개 노동통계 기반 PoC 가정값(재무자문 아님). 인간 역할은 로켓펀치 공급량으로 검증하며,
+          AI/미션은 MISO로 실제 실행됩니다. 외부 API 미응답 시 목 데이터로 graceful fallback.
+        </p>
+        <p className="mt-2 font-medium text-slate-500">Workforce Architect · 빌더 : 복병준, 2026.5.31</p>
       </footer>
 
       {/* #3 아래로 스크롤 인디케이터 */}
