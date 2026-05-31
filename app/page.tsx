@@ -7,6 +7,8 @@ import BalanceSheet from "@/components/BalanceSheet";
 import RefinePanel from "@/components/RefinePanel";
 import PublishPreview from "@/components/PublishPreview";
 import NLBriefInput from "@/components/NLBriefInput";
+import ClarifyStep from "@/components/ClarifyStep";
+import type { ClarifyQuestion } from "@/app/api/clarify/route";
 import DeckZone from "@/components/DeckZone";
 import WorkflowDeckDashboard from "@/components/WorkflowDeckDashboard";
 import TimeframeDashboard from "@/components/TimeframeDashboard";
@@ -27,6 +29,13 @@ export default function Home() {
   const [publishOpen, setPublishOpen] = useState(false);
   const [formInitial, setFormInitial] = useState<Brief>(mock.project);
   const [formKey, setFormKey] = useState(0);
+
+  // ①-b AI 질문 플로우
+  const [pendingBrief, setPendingBrief] = useState<Brief | null>(null);
+  const [clarifyQuestions, setClarifyQuestions] = useState<ClarifyQuestion[]>([]);
+  const [clarifyLoading, setClarifyLoading] = useState(false);
+  const [clarifyDegraded, setClarifyDegraded] = useState(false);
+  const [clarifyOpen, setClarifyOpen] = useState(false);
 
   // rank3 카드덱
   const [deck, setDeck] = useState<DeckCardData[]>([]);
@@ -149,7 +158,39 @@ export default function Home() {
     );
   }
 
-  async function handleDesign(b: Brief) {
+  // ①-b: [설계하기] → 먼저 AI 객관식 질문
+  async function startClarify(b: Brief) {
+    setPendingBrief(b);
+    setClarifyOpen(true);
+    setClarifyLoading(true);
+    setClarifyQuestions([]);
+    try {
+      const res = await fetch("/api/clarify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(b),
+      });
+      const json = await res.json();
+      setClarifyQuestions(json.questions ?? []);
+      setClarifyDegraded(Boolean(json.degraded));
+    } catch {
+      setClarifyQuestions([]);
+      setClarifyDegraded(true);
+    } finally {
+      setClarifyLoading(false);
+    }
+  }
+
+  function confirmClarify(context: string) {
+    setClarifyOpen(false);
+    if (pendingBrief) handleDesign(pendingBrief, context);
+  }
+  function skipClarify() {
+    setClarifyOpen(false);
+    if (pendingBrief) handleDesign(pendingBrief);
+  }
+
+  async function handleDesign(b: Brief, clarifyContext?: string) {
     setLoading(true);
     setDeck([]);
     setReview(null);
@@ -157,7 +198,7 @@ export default function Home() {
       const res = await fetch("/api/architect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...b, conversationId }),
+        body: JSON.stringify({ ...b, clarifyContext, conversationId }),
       });
       const json = await res.json();
       if (json.design) setOrgDesign(json.design as OrgDesign);
@@ -199,7 +240,7 @@ export default function Home() {
         </p>
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
           <NLBriefInput onParsed={handleParsed} />
-          <BriefForm key={formKey} initial={formInitial} onSubmit={handleDesign} loading={loading} />
+          <BriefForm key={formKey} initial={formInitial} onSubmit={startClarify} loading={loading} />
           {designed && (
             <p className="mt-3 text-xs">
               {degraded ? (
@@ -211,6 +252,22 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* STEP 1.5 — AI 질문 (설계 전 직군 모호함 제거) */}
+      {clarifyOpen && (
+        <>
+          <FlowArrow />
+          <section className="mx-auto max-w-3xl">
+            <ClarifyStep
+              questions={clarifyQuestions}
+              loading={clarifyLoading}
+              degraded={clarifyDegraded}
+              onConfirm={confirmClarify}
+              onSkip={skipClarify}
+            />
+          </section>
+        </>
+      )}
 
       <FlowArrow />
 

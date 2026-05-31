@@ -11,6 +11,7 @@ interface ArchitectBody extends Brief {
   conversationId?: string | null;
   prevDesign?: OrgDesign;
   instruction?: string; // §5.4 "엣지로 압축" 등 추가 지시
+  clarifyContext?: string; // 설계 전 AI 질문에 대한 사용자 답변
 }
 
 function pickBrief(b: ArchitectBody): Brief {
@@ -78,7 +79,10 @@ export async function POST(req: Request) {
         "fieldCost.volume, targetRevenue, laborBudget 등)는 단위·한글·따옴표 없이 순수 정수로만 쓴다.") +
     RELATION_RULE;
 
-  const query = `${grounding}\n\n---\n${baseQuery}`;
+  const clarifyBlock = body.clarifyContext
+    ? `\n[설계자 답변 — 반드시 반영, 특히 핵심 인력 직군을 정확히 매핑]\n${body.clarifyContext}`
+    : "";
+  const query = `${grounding}\n\n---\n${baseQuery}${clarifyBlock}`;
 
   // §10-4: 모델 JSON 신뢰성 대비 — 파싱 실패 시 재시도, 그래도 실패하면 목 fallback
   const MAX_TRIES = 3;
